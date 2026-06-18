@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Handyman Course</title>
+    <meta name="theme-color" content="#2A5C45">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Handyman">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #F7F6F3;
+            --surface: #FFFFFF;
+            --border: #E2E0DA;
+            --border-strong: #C8C5BC;
+            --text-primary: #1A1917;
+            --text-secondary: #4A4845;
+            --text-muted: #8A8784;
+            --accent: #2A5C45;
+            --accent-light: #EAF3EE;
+            --accent-mid: #4A8C6A;
+            --amber: #B85C00;
+            --amber-light: #FEF3E2;
+            --red: #C0392B;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            background: var(--accent);
+            padding: 3rem 2rem 2.5rem;
+            text-align: center;
+        }
+
+        .site-header .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .site-header h1 {
+            font-family: Georgia, 'Book Antiqua', serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 400;
+            color: #FFFFFF;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .site-header .subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.72);
+            max-width: 520px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            display: block;
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.04em;
+        }
+
+        .page-body {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .course-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1.25rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn {
+            padding: 7px 15px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: all 0.15s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--bg);
+            color: var(--text-primary);
+            border-color: var(--border-strong);
+        }
+
+        .nav-btn.active {
+            background: var(--accent);
+            color: #FFFFFF;
+            border-color: var(--accent);
+        }
+
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        .mod-header {
+            margin-bottom: 1.75rem;
+        }
+
+        .mod-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-mid);
+            margin-bottom: 8px;
+        }
+
+        .mod-title {
+            font-family: Georgia, 'Book Antiqua', serif;
+            font-size: clamp(22px, 3.5vw, 32px);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .mod-intro {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 680px;
+        }
+
+        .lessons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .lcard:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-md);
+        }
+
+        .lhead {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 18px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .lnum {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .lcard.open .lnum {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .ltitle-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .ltitle {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 99px;
+        }
+
+        .badge-diag {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .badge-adv {
+            background: #EEF0FE;
+            color: #3A46A8;
+        }
+
+        .badge-warn {
+            background: var(--amber-light);
+            color: var(--amber);
+        }
+
+        .ldur {
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .lchev {
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .lcard.open .lchev {
+            transform: rotate(180deg);
+        }
+
+        .lbody {
+            display: none;
+            border-top: 1px solid var(--border);
+            padding: 20px 20px 20px 58px;
+        }
+
+        .lcard.open .lbody {
+            display: block;
+        }
+
+        .lbody p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        .lbody p:last-child {
+            margin-bottom: 0;
+        }
+
+        .lbody strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .steps {
+            counter-reset: s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 14px 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .step::before {
+            counter-increment: s;
+            content: counter(s);
+            min-width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .checklist li i {
+            font-size: 14px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .ci-green {
+            color: var(--accent-mid);
+        }
+
+        .ci-amber {
+            color: var(--amber);
+        }
+
+        .ci-red {
+            color: var(--red);
+        }
+
+        .callout {
+            border-radius: var(--radius-md);
+            padding: 13px 16px;
+            margin: 14px 0;
+        }
+
+        .callout-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 5px;
+        }
+
+        .callout p {
+            font-size: 13px !important;
+            line-height: 1.65;
+            margin: 0 !important;
+        }
+
+        .callout-diag {
+            background: var(--accent-light);
+            border-left: 3px solid var(--accent-mid);
+        }
+
+        .callout-diag .callout-label,
+        .callout-diag p {
+            color: var(--accent) !important;
+        }
+
+        .callout-info {
+            background: #EEF5FE;
+            border-left: 3px solid #4A7FD4;
+        }
+
+        .callout-info .callout-label,
+        .callout-info p {
+            color: #2A5FA8 !important;
+        }
+
+        .callout-warn {
+            background: var(--amber-light);
+            border-left: 3px solid #E8900A;
+        }
+
+        .callout-warn .callout-label,
+        .callout-warn p {
+            color: var(--amber) !important;
+        }
+
+        .dtable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 14px 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .dtable th {
+            text-align: left;
+            padding: 9px 12px;
+            background: var(--bg);
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dtable td {
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        .dtable tr:last-child td {
+            border-bottom: none;
+        }
+
+        .dtable tr:nth-child(even) td {
+            background: #FAFAF8;
+        }
+
+        .mod-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .prog-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .next-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 20px;
+            background: var(--accent);
+            color: #FFFFFF;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: background 0.15s;
+        }
+
+        .next-btn:hover {
+            background: #1E4733;
+        }
+
+        @media (max-width: 600px) {
+            .page-body {
+                padding: 1.5rem 1rem 3rem;
+            }
+
+            .lbody {
+                padding-left: 18px;
+            }
+
+            .site-header {
+                padding: 2rem 1.25rem 2rem;
+            }
+
+            .dtable {
+                font-size: 12px;
+            }
+        }
+
+        .nav-btn:focus-visible,
+        .next-btn:focus-visible,
+        .lhead:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Offline icon replacements — no CDN required */
+        i[class*="fa-"] {
+            font-style: normal;
+        }
+
+        i[class*="fa-check"]::before {
+            content: "✓";
+        }
+
+        i[class*="fa-triangle-exclamation"]::before {
+            content: "⚠";
+        }
+
+        i[class*="fa-xmark"]::before {
+            content: "✕";
+        }
+
+        i[class*="fa-clock"]::before {
+            content: "⏱";
+        }
+
+        i[class*="fa-chevron-down"]::before {
+            content: "▾";
+        }
+
+        i[class*="fa-arrow-right"]::before {
+            content: "→";
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <p class="eyebrow">Intermediate — Advanced</p>
+        <h1>Advanced Handyman Course</h1>
+        <p class="subtitle">Diagnostics, troubleshooting, and professional technique across eight trade areas — from
+            someone who has been doing this for 30 years.</p>
+        <div class="header-stats">
+            <div class="stat"><span class="stat-num">8</span><span class="stat-label">Modules</span></div>
+            <div class="stat"><span class="stat-num">102</span><span class="stat-label">Lessons</span></div>
+            <div class="stat"><span class="stat-num">~43 hrs</span><span class="stat-label">Content</span></div>
+        </div>
+    </header>
+    <div class="page-body">
+        <nav class="course-nav" id="nav" aria-label="Course modules"></nav>
+        <div id="modules"></div>
+    </div>
+    <script>
+        const data = [
+            {
+                id: "plumbing", label: "Plumbing", eyebrow: "Module 1 of 7", title: "Plumbing — 14 common problems",
+                intro: "From dripping faucets to sewer smells, low pressure to water heater failures — 14 of the most common plumbing problems in homes, with diagnosis-first approaches and step-by-step fixes.",
+                lessons: [
+                    {
+                        title: "Dripping faucets", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Very common", c: "badge-warn" }], dur: "35 min",
+                        body: `<p>A faucet that drips once per second wastes over 3,000 litres a year. The fix is different for each faucet type — the first step is always identification.</p>
+<div class="callout callout-diag"><div class="callout-label">Identify your faucet type first</div><p>Compression: rubber washer on a threaded stem. Cartridge: cylindrical cartridge, pulls straight out. Ball: round slotted ball, common on single-handle kitchen faucets. Ceramic disc: flat ceramic disc, rarely fails but can crack.</p></div>
+<div class="steps">
+<div class="step">Shut off the supply valve under the sink. Turn on the tap to release residual pressure and confirm water is off.</div>
+<div class="step">Remove the handle — usually one screw hidden under a decorative cap. Photograph all parts before disassembly.</div>
+<div class="step">Compression: unscrew the packing nut, remove the stem, replace the rubber washer at the bottom and O-rings on the stem. Replace the seat if it's grooved — use a seat wrench.</div>
+<div class="step">Cartridge: pull the cartridge straight out (may need a cartridge puller). Take the old one to the hardware store to match exactly. Insert new cartridge in the same orientation.</div>
+<div class="step">Ball: replacement kit includes new springs, seats, and ball. Replace all at once — if the ball has worn, the seats have too.</div>
+<div class="step">Reassemble, turn water on slowly, and test. A single drip after replacement means the seat is damaged — replace it with a seat wrench.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Common mistake</div><p>Overtightening a compression faucet to stop the drip destroys the seat. A dripping compression faucet needs a new washer, not more torque.</p></div>`},
+                    {
+                        title: "Running toilets", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Very common", c: "badge-warn" }], dur: "30 min",
+                        body: `<p>A running toilet wastes up to 200 litres per day. The dye test identifies the cause in 60 seconds before you touch anything.</p>
+<div class="callout callout-info"><div class="callout-label">The dye test</div><p>Drop food colouring in the tank. Don't flush. Wait 10 minutes. Colour in the bowl = flapper leak. No colour but still running = fill valve or float issue. Water above the overflow tube = float set too high.</p></div>
+<div class="steps">
+<div class="step">Do the dye test first — it takes 10 minutes and pinpoints the problem before you touch anything.</div>
+<div class="step">Flapper leak: turn off supply, flush to drain tank. Run a finger around the seat — rough or pitted = you need a new flush valve body, not just a flapper.</div>
+<div class="step">New flapper: match by brand. Connect chain with 1/2" slack. Too much slack = won't seal. Too little = won't close.</div>
+<div class="step">Float too high: adjust the fill valve float screw anti-clockwise until the waterline sits 1" below the top of the overflow tube.</div>
+<div class="step">Fill valve won't shut off: replace the whole fill valve. Shut off supply, flush, sponge out water, disconnect supply line, unscrew locknut under tank, lift out old valve, install new one.</div>
+<div class="step">After any repair, do a final dye test to confirm the fix.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>Flappers degrade from chlorine in municipal water. In heavily chlorinated areas, replace them every 3–4 years proactively — they're a $5 part.</p></div>`}
+                ]
+            }
+        ];
+
+        const nav = document.getElementById('nav');
+        const mods = document.getElementById('modules');
+
+        // Simplified version for index - load just a sample to show it works
+        data.forEach((mod, mi) => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-btn' + (mi === 0 ? ' active' : '');
+            btn.textContent = mod.label;
+            btn.setAttribute('aria-label', mod.title);
+            btn.onclick = () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('mod-' + mod.id).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            nav.appendChild(btn);
+
+            const div = document.createElement('div');
+            div.className = 'module' + (mi === 0 ? ' active' : '');
+            div.id = 'mod-' + mod.id;
+
+            div.innerHTML = `
+                <div class="mod-header">
+                    <div class="mod-eyebrow">${mod.eyebrow}</div>
+                    <h2 class="mod-title">${mod.title}</h2>
+                    <p class="mod-intro">${mod.intro}</p>
+                </div>
+                <div class="lessons">
+                    ${mod.lessons.map((l, li) => `
+                        <div class="lcard" id="lc-${mod.id}-${li}">
+                            <div class="lhead" onclick="toggleL('lc-${mod.id}-${li}')" role="button" tabindex="0" aria-expanded="false">
+                                <div class="lnum">${li + 1}</div>
+                                <div class="ltitle-wrap">
+                                    <span class="ltitle">${l.title}</span>
+                                    ${(l.badges || []).map(b => `<span class="badge ${b.c}">${b.t}</span>`).join('')}
+                                </div>
+                                <span class="ldur"><i class="fa-regular fa-clock" aria-hidden="true"></i> ${l.dur}</span>
+                                <i class="fa-solid fa-chevron-down lchev" aria-hidden="true"></i>
+                            </div>
+                            <div class="lbody" id="lb-${mod.id}-${li}">${l.body}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            mods.appendChild(div);
+        });
+
+        function toggleL(id) {
+            const card = document.getElementById(id);
+            const isOpen = card.classList.toggle('open');
+            card.querySelector('.lhead').setAttribute('aria-expanded', isOpen);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const el = e.target;
+                if (el.classList.contains('lhead')) {
+                    e.preventDefault();
+                    const card = el.closest('.lcard');
+                    if (card) toggleL(card.id);
+                }
+            }
+        });
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => { });
+            });
+        }
+    </script>
+</body>
+
+</html>

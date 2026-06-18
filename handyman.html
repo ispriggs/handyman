@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Handyman Course</title>
+    <meta name="theme-color" content="#2A5C45">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Handyman">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #F7F6F3;
+            --surface: #FFFFFF;
+            --border: #E2E0DA;
+            --border-strong: #C8C5BC;
+            --text-primary: #1A1917;
+            --text-secondary: #4A4845;
+            --text-muted: #8A8784;
+            --accent: #2A5C45;
+            --accent-light: #EAF3EE;
+            --accent-mid: #4A8C6A;
+            --amber: #B85C00;
+            --amber-light: #FEF3E2;
+            --red: #C0392B;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            background: var(--accent);
+            padding: 3rem 2rem 2.5rem;
+            text-align: center;
+        }
+
+        .site-header .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .site-header h1 {
+            font-family: Georgia, 'Book Antiqua', serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 400;
+            color: #FFFFFF;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .site-header .subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.72);
+            max-width: 520px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            display: block;
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.04em;
+        }
+
+        .page-body {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .course-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1.25rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn {
+            padding: 7px 15px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: all 0.15s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--bg);
+            color: var(--text-primary);
+            border-color: var(--border-strong);
+        }
+
+        .nav-btn.active {
+            background: var(--accent);
+            color: #FFFFFF;
+            border-color: var(--accent);
+        }
+
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        .mod-header {
+            margin-bottom: 1.75rem;
+        }
+
+        .mod-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-mid);
+            margin-bottom: 8px;
+        }
+
+        .mod-title {
+            font-family: Georgia, 'Book Antiqua', serif;
+            font-size: clamp(22px, 3.5vw, 32px);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .mod-intro {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 680px;
+        }
+
+        .lessons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lcard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .lcard:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-md);
+        }
+
+        .lhead {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 18px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .lnum {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .lcard.open .lnum {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .ltitle-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .ltitle {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 99px;
+        }
+
+        .badge-diag {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .badge-adv {
+            background: #EEF0FE;
+            color: #3A46A8;
+        }
+
+        .badge-warn {
+            background: var(--amber-light);
+            color: var(--amber);
+        }
+
+        .ldur {
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .lchev {
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .lcard.open .lchev {
+            transform: rotate(180deg);
+        }
+
+        .lbody {
+            display: none;
+            border-top: 1px solid var(--border);
+            padding: 20px 20px 20px 58px;
+        }
+
+        .lcard.open .lbody {
+            display: block;
+        }
+
+        .lbody p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        .lbody p:last-child {
+            margin-bottom: 0;
+        }
+
+        .lbody strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .steps {
+            counter-reset: s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 14px 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .step::before {
+            counter-increment: s;
+            content: counter(s);
+            min-width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .checklist li i {
+            font-size: 14px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .ci-green {
+            color: var(--accent-mid);
+        }
+
+        .ci-amber {
+            color: var(--amber);
+        }
+
+        .ci-red {
+            color: var(--red);
+        }
+
+        .callout {
+            border-radius: var(--radius-md);
+            padding: 13px 16px;
+            margin: 14px 0;
+        }
+
+        .callout-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 5px;
+        }
+
+        .callout p {
+            font-size: 13px !important;
+            line-height: 1.65;
+            margin: 0 !important;
+        }
+
+        .callout-diag {
+            background: var(--accent-light);
+            border-left: 3px solid var(--accent-mid);
+        }
+
+        .callout-diag .callout-label,
+        .callout-diag p {
+            color: var(--accent) !important;
+        }
+
+        .callout-info {
+            background: #EEF5FE;
+            border-left: 3px solid #4A7FD4;
+        }
+
+        .callout-info .callout-label,
+        .callout-info p {
+            color: #2A5FA8 !important;
+        }
+
+        .callout-warn {
+            background: var(--amber-light);
+            border-left: 3px solid #E8900A;
+        }
+
+        .callout-warn .callout-label,
+        .callout-warn p {
+            color: var(--amber) !important;
+        }
+
+        .dtable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 14px 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .dtable th {
+            text-align: left;
+            padding: 9px 12px;
+            background: var(--bg);
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dtable td {
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        .dtable tr:last-child td {
+            border-bottom: none;
+        }
+
+        .dtable tr:nth-child(even) td {
+            background: #FAFAF8;
+        }
+
+        .mod-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .prog-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .next-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 20px;
+            background: var(--accent);
+            color: #FFFFFF;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: background 0.15s;
+        }
+
+        .next-btn:hover {
+            background: #1E4733;
+        }
+
+        @media (max-width: 600px) {
+            .page-body {
+                padding: 1.5rem 1rem 3rem;
+            }
+
+            .lbody {
+                padding-left: 18px;
+            }
+
+            .site-header {
+                padding: 2rem 1.25rem 2rem;
+            }
+
+            .dtable {
+                font-size: 12px;
+            }
+        }
+
+        .nav-btn:focus-visible,
+        .next-btn:focus-visible,
+        .lhead:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Offline icon replacements — no CDN required */
+        i[class*="fa-"] {
+            font-style: normal;
+        }
+
+        i[class*="fa-check"]::before {
+            content: "✓";
+        }
+
+        i[class*="fa-triangle-exclamation"]::before {
+            content: "⚠";
+        }
+
+        i[class*="fa-xmark"]::before {
+            content: "✕";
+        }
+
+        i[class*="fa-clock"]::before {
+            content: "⏱";
+        }
+
+        i[class*="fa-chevron-down"]::before {
+            content: "▾";
+        }
+
+        i[class*="fa-arrow-right"]::before {
+            content: "→";
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <p class="eyebrow">Intermediate — Advanced</p>
+        <h1>Advanced Handyman Course</h1>
+        <p class="subtitle">Diagnostics, troubleshooting, and professional technique across eight trade areas — from
+            someone who has been doing this for 30 years.</p>
+        <div class="header-stats">
+            <div class="stat"><span class="stat-num">8</span><span class="stat-label">Modules</span></div>
+            <div class="stat"><span class="stat-num">102</span><span class="stat-label">Lessons</span></div>
+            <div class="stat"><span class="stat-num">~43 hrs</span><span class="stat-label">Content</span></div>
+        </div>
+    </header>
+    <div class="page-body">
+        <nav class="course-nav" id="nav" aria-label="Course modules"></nav>
+        <div id="modules"></div>
+    </div>
+    <script>
+        const data = [
+            {
+                id: "plumbing", label: "Plumbing", eyebrow: "Module 1 of 7", title: "Plumbing — 14 common problems",
+                intro: "From dripping faucets to sewer smells, low pressure to water heater failures — 14 of the most common plumbing problems in homes, with diagnosis-first approaches and step-by-step fixes.",
+                lessons: [
+                    {
+                        title: "Dripping faucets", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Very common", c: "badge-warn" }], dur: "35 min",
+                        body: `<p>A faucet that drips once per second wastes over 3,000 litres a year. The fix is different for each faucet type — the first step is always identification.</p>
+<div class="callout callout-diag"><div class="callout-label">Identify your faucet type first</div><p>Compression: rubber washer on a threaded stem. Cartridge: cylindrical cartridge, pulls straight out. Ball: round slotted ball, common on single-handle kitchen faucets. Ceramic disc: flat ceramic disc, rarely fails but can crack.</p></div>
+<div class="steps">
+<div class="step">Shut off the supply valve under the sink. Turn on the tap to release residual pressure and confirm water is off.</div>
+<div class="step">Remove the handle — usually one screw hidden under a decorative cap. Photograph all parts before disassembly.</div>
+<div class="step">Compression: unscrew the packing nut, remove the stem, replace the rubber washer at the bottom and O-rings on the stem. Replace the seat if it's grooved — use a seat wrench.</div>
+<div class="step">Cartridge: pull the cartridge straight out (may need a cartridge puller). Take the old one to the hardware store to match exactly. Insert new cartridge in the same orientation.</div>
+<div class="step">Ball: replacement kit includes new springs, seats, and ball. Replace all at once — if the ball has worn, the seats have too.</div>
+<div class="step">Reassemble, turn water on slowly, and test. A single drip after replacement means the seat is damaged — replace it with a seat wrench.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Common mistake</div><p>Overtightening a compression faucet to stop the drip destroys the seat. A dripping compression faucet needs a new washer, not more torque.</p></div>`},
+                    {
+                        title: "Running toilets", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Very common", c: "badge-warn" }], dur: "30 min",
+                        body: `<p>A running toilet wastes up to 200 litres per day. The dye test identifies the cause in 60 seconds before you touch anything.</p>
+<div class="callout callout-info"><div class="callout-label">The dye test</div><p>Drop food colouring in the tank. Don't flush. Wait 10 minutes. Colour in the bowl = flapper leak. No colour but still running = fill valve or float issue. Water above the overflow tube = float set too high.</p></div>
+<div class="steps">
+<div class="step">Do the dye test first — it takes 10 minutes and pinpoints the problem before you touch anything.</div>
+<div class="step">Flapper leak: turn off supply, flush to drain tank. Run a finger around the seat — rough or pitted = you need a new flush valve body, not just a flapper.</div>
+<div class="step">New flapper: match by brand. Connect chain with 1/2" slack. Too much slack = won't seal. Too little = won't close.</div>
+<div class="step">Float too high: adjust the fill valve float screw anti-clockwise until the waterline sits 1" below the top of the overflow tube.</div>
+<div class="step">Fill valve won't shut off: replace the whole fill valve. Shut off supply, flush, sponge out water, disconnect supply line, unscrew locknut under tank, lift out old valve, install new one.</div>
+<div class="step">After any repair, do a final dye test to confirm the fix.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>Flappers degrade from chlorine in municipal water. In heavily chlorinated areas, replace them every 3–4 years proactively — they're a $5 part.</p></div>`},
+                    {
+                        title: "Blocked drains", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Very common", c: "badge-warn" }], dur: "30 min",
+                        body: `<p>Most drain blockages are within a metre of the fixture. The mistake is reaching for chemicals before locating exactly where the blockage is.</p>
+<div class="callout callout-diag"><div class="callout-label">Scope the blockage first</div><p>Single fixture slow = local blockage (strainer, P-trap, first metre of drain). Multiple fixtures backing up = main line or shared stack. Gurgling toilet when sink drains = venting problem, not a blockage.</p></div>
+<div class="steps">
+<div class="step">Start at the strainer. Remove and clear hair and debris with a Zip-It tool or needle-nose pliers — fixes the majority of bathroom sink and shower blockages.</div>
+<div class="step">P-trap next: place a bucket beneath, unscrew the slip nuts, remove the trap, clean it out, and reinstall.</div>
+<div class="step">Still blocked: feed a drain snake past where the trap was. Turn clockwise as you feed to engage the blockage, pull back slowly.</div>
+<div class="step">Kitchen sink: avoid caustic chemicals — they degrade plastic pipes. A dedicated kitchen drain snake navigates bends better than a standard snake.</div>
+<div class="step">Multiple fixtures blocked = main line issue. This is beyond handyman scope — a plumber with a powered auger or hydro-jet is the correct call.</div>
+<div class="step">After clearing: flush with hot water for 2 minutes. Monthly: baking soda + vinegar as a maintenance routine for kitchen drains.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Never use chemicals on</div><p>Completely blocked drains — chemicals sit in the pipe, concentrate, and can damage PVC or attack the seals in your P-trap.</p></div>`},
+                    {
+                        title: "Low water pressure", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Low pressure at one fixture is almost always a local problem. Low pressure throughout the house is a supply-side problem. Diagnosing the scope first saves hours of unnecessary work.</p>
+<div class="callout callout-diag"><div class="callout-label">Test pressure at the source</div><p>Use a $15 hose-bib gauge at an outdoor tap near the meter. Normal range: 45–80 psi. Under 45 psi = PRV or supply issue. Over 80 psi = PRV adjustment needed. Fine at meter but low at fixture = local problem (aerator, shutoff, scale).</p></div>
+<div class="steps">
+<div class="step">Single fixture: unscrew the aerator, soak in white vinegar 30 min, reassemble. This fixes most single-tap pressure problems.</div>
+<div class="step">Hot side only: suspect the water heater shutoff valve or a failing tempering valve. Test by running cold vs. hot separately.</div>
+<div class="step">PRV adjustment: locate the bell-shaped valve where the main enters. Clockwise = increase pressure, anti-clockwise = decrease. One full turn ≈ 8–10 psi. Note the current setting before adjusting.</div>
+<div class="step">Gate valves that are 80% open look fully open but restrict dramatically — open all isolation valves fully and check.</div>
+<div class="step">Galvanised pipes (pre-1960s): mineral buildup progressively reduces internal diameter. No fix short of repiping with PEX or copper.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Neighbour test</div><p>Ask a neighbour if they have the same issue before investigating your system. Municipal supply problems are common after nearby street work — a utility call may fix it without touching your house.</p></div>`},
+                    {
+                        title: "Water heater problems", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Advanced", c: "badge-adv" }], dur: "45 min",
+                        body: `<p>Water heater calls split into three: no hot water, not enough hot water, and strange noises or smells. Each points to a different component.</p>
+<div class="callout callout-diag"><div class="callout-label">Symptom map</div><p>No hot water (electric) = tripped breaker or failed element. No hot water (gas) = pilot out, thermocouple, or gas supply. Not enough hot water = undersized unit, sediment, or failed lower element. Popping/rumbling = sediment on tank floor. Rotten egg smell = bacterial growth from thermostat set too low.</p></div>
+<div class="steps">
+<div class="step">Electric, no hot water: reset the high-limit button (red button behind access panel, push firmly until it clicks). If it trips again immediately, a heating element has shorted.</div>
+<div class="step">Test elements with a multimeter (power off at breaker): disconnect wires, set to ohms. Good element = 10–30Ω. Zero or infinite = failed.</div>
+<div class="step">Element replacement: shut off cold supply, drain via hose, remove with 1.5" element wrench, install new element with fresh gasket, refill before restoring power — a dry element destroys itself instantly.</div>
+<div class="step">Annual sediment flush: hose to drain valve, run until clear. If valve won't close after flushing, replace it — they're $8 and worth doing.</div>
+<div class="step">Anode rod: remove with 1-1/16" socket. Replace if under 1/2" diameter or heavily corroded. A depleted anode rod is the primary cause of premature tank failure.</div>
+<div class="step">Rotten egg: raise temperature to 60°C / 140°F for 2–3 hours to kill bacteria, then flush. If smell returns, replace the anode rod with a magnesium type.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Safety</div><p>Never work on a gas water heater gas supply, pilot assembly, or venting yourself. Electric element replacement is safe only if the breaker is confirmed dead with a non-contact tester before touching any wire.</p></div>`},
+                    {
+                        title: "Leaking pipes", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>Accessible pipe leaks are a 30-minute fix. Leaks inside walls require finding the source before anything is opened — water travels along framing before dripping.</p>
+<div class="callout callout-diag"><div class="callout-label">Finding hidden leaks</div><p>Shut off every tap and appliance. Read your water meter, wait 2 hours without using any water, read again. If the meter moved, you have an active supply-side leak. A moisture meter traces extent without opening drywall unnecessarily.</p></div>
+<div class="steps">
+<div class="step">Apply a temporary pipe repair clamp to stop damage immediately while you prepare for the permanent fix.</div>
+<div class="step">Small copper leak: cut out a 150mm section around the leak with a pipe cutter. Clean ends with emery cloth until bright copper. Install push-fit couplings — mark insertion depth, push firmly until the mark disappears.</div>
+<div class="step">Soldered joint leak: dry the pipe completely before attempting to re-solder — water in the pipe prevents solder from flowing. A heat gun plus dry rags works.</div>
+<div class="step">Threaded joint leak: drain, dry, apply PTFE tape clockwise (3–4 wraps), reassemble. Wrapping anti-clockwise unwinds when you tighten.</div>
+<div class="step">After repair: restore pressure slowly and watch for 5 minutes. Wipe dry first so any new weeping is immediately visible.</div>
+</div>`},
+                    {
+                        title: "Faulty toilet fill valve", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>A fill valve that hisses constantly, cycles on and off, or takes more than 3 minutes to refill is at end of life. Replacement costs under $15 and takes 20 minutes.</p>
+<div class="callout callout-diag"><div class="callout-label">Symptom map</div><p>Constant hissing = worn diaphragm. Cycling every 20 min = flapper leak (do dye test first). Very slow refill = obstructed or failing valve. Water hammer when filling = supply pressure too high for the valve's rating.</p></div>
+<div class="steps">
+<div class="step">Shut off supply, flush to empty tank, sponge out remaining water.</div>
+<div class="step">Disconnect supply line from the fill valve shank under the tank.</div>
+<div class="step">Unscrew the plastic locknut under the tank anti-clockwise. Old valve lifts straight out.</div>
+<div class="step">Critical: adjust height on new valve before locking — top of the overflow port must sit 1" above the top of the flush valve overflow tube.</div>
+<div class="step">Hand-tighten locknut, then 1/2 turn more — do not over-tighten or you'll crack the tank.</div>
+<div class="step">Adjust float so water fills to 1" below the top of the overflow tube. Flush twice, confirm refill time is under 90 seconds.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>The Fluidmaster 400A is the industry standard — universal fit, quiet, and parts available everywhere. Avoid no-name fill valves; plastic quality varies dramatically.</p></div>`},
+                    {
+                        title: "Pipe condensation and sweating", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>Sweating pipes create enough moisture to rot framing and grow mould over years. It's not a plumbing failure — it's a physics problem.</p>
+<div class="callout callout-diag"><div class="callout-label">Confirm it's condensation, not a leak</div><p>Dry the pipe completely. Wait 30 minutes. Moisture reappearing on the outside (not at joints) = condensation. Moisture only at joints = slow leak — treat differently.</p></div>
+<div class="steps">
+<div class="step">Insulate cold water supply lines with closed-cell foam pipe insulation. Cut to length with a utility knife, snap onto the pipe.</div>
+<div class="step">At joints, elbows, and tees: cut insulation at 45° angles so pieces meet tightly — gaps are thermal bridges and will still sweat.</div>
+<div class="step">Seal all seams with self-sealing pipe wrap tape or contact cement — an unglued seam defeats the insulation.</div>
+<div class="step">In crawlspaces: vapour barrier encapsulation reduces ambient humidity and is often more effective than insulating individual pipes.</div>
+<div class="step">Sweating in conditioned space: the pipe may be in a poorly insulated exterior wall cavity. Routing the pipe away from the exterior is the real fix.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Watch for</div><p>Visible mould or staining on framing around sweating pipes means moisture has been present for months. Probe timber for rot before covering anything.</p></div>`},
+                    {
+                        title: "Garbage disposal problems", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Garbage disposals fail in three ways: won't turn on, hums but won't spin, or leaks. Each has a specific fix and most are resolved without replacement.</p>
+<div class="callout callout-diag"><div class="callout-label">Symptom map</div><p>No sound at all = tripped thermal overload (reset button). Hums but won't spin = jam (hex key at bottom). Leak from top = plumber's putty seal failed. Leak from side = clamp or fitting issue.</p></div>
+<div class="steps">
+<div class="step">Won't turn on: press the red reset button on the bottom of the unit firmly until it clicks. Restore power and test.</div>
+<div class="step">Hums but won't spin: TURN OFF POWER. Insert a 1/4" hex key into the port on the bottom centre. Work it back and forth to free the jam.</div>
+<div class="step">Use tongs — never your hand — to remove whatever was jamming from above. Restore power — unit should spin freely.</div>
+<div class="step">Leak at sink flange: loosen mounting ring, push disposal down to access flange from above, remove old putty, apply fresh rope of plumber's putty, reseat and retighten.</div>
+<div class="step">Leak at side connections: tighten hose clamp (dishwasher inlet) or re-tape threads and re-seat gasket (drain outlet).</div>
+</div>
+<div class="callout callout-diag"><div class="callout-label">Diagnosis shortcut</div><p>No sound at all? Test the outlet under the sink first — it's often switched and may be on the same switch as the disposal. Test with another appliance before opening anything.</p></div>`},
+                    {
+                        title: "Sewer smell in the house", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Sewer gas is hydrogen sulphide — unpleasant and flammable at high concentrations. The source is almost always a dry P-trap, a cracked wax ring, or a failed vent.</p>
+<div class="callout callout-diag"><div class="callout-label">Locate the source by zone</div><p>One room only = floor drain with dry P-trap (most common cause). Bathroom = check toilet wax ring (toilet rocks slightly if ring has failed). Throughout house = blocked or cracked roof vent. When it rains = cracked vent pipe in a wall cavity.</p></div>
+<div class="steps">
+<div class="step">Pour 500ml of water into every floor drain in the affected area. Add a tablespoon of cooking oil to slow evaporation. If smell clears in 30 minutes, a dry P-trap was the culprit.</div>
+<div class="step">Toilet wax ring: rock the toilet — 2–3mm of movement = failed ring. Shut off supply, flush, sponge out water, remove bolts, lift toilet, scrape old wax, install new ring, reset.</div>
+<div class="step">Blocked vent: get on the roof, clear debris from the vent opening, flush with a garden hose from the top down for 30 seconds.</div>
+<div class="step">Cracked vent inside a wall: use a smoke test (pressurised theatrical smoke in the drain system) — smoke emerges from the crack location. Requires opening the wall.</div>
+<div class="step">Seldom-used fixtures that dry repeatedly: install a trap primer valve or a TrapSeal device that maintains the water seal automatically.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Safety</div><p>Strong, persistent sewer smell = ventilate immediately, no open flames. Hydrogen sulphide is flammable and toxic at high concentrations. If you cannot locate the source within a day, call a plumber.</p></div>`},
+                    {
+                        title: "Water pressure: PRV and supply diagnosis", badges: [{ t: "Diagnostics", c: "badge-diag" }, { t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Low pressure throughout a house is almost always a PRV or supply-side issue. Diagnosing correctly before adjusting anything prevents creating a new problem.</p>
+<div class="callout callout-diag"><div class="callout-label">Gauge test first</div><p>$15 hose-bib gauge at an outdoor tap near the meter. Under 45 psi = supply issue or PRV set too low. Over 80 psi = PRV needs adjustment or replacement. A failing PRV often oscillates — pressure fluctuates rather than staying consistent.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>PRV adjustment: clockwise raises pressure, anti-clockwise lowers; one full turn ≈ 8–10 psi; PRV lifespan is 10–15 years</li>
+<li><i class="fa-solid fa-check ci-green"></i>Scale-blocked galvanised pipes show low pressure only when multiple fixtures run simultaneously — vinegar flush won't fix severe buildup; repipe</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Gate valve that's partially closed looks fully open — confirm all isolation valves are turned fully anti-clockwise before adjusting the PRV</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>High pressure over 80 psi damages appliances silently and accelerates joint failure — don't ignore it even if nothing is leaking yet</li>
+</ul>`},
+                    {
+                        title: "Phantom flushes and advanced toilet diagnosis", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Phantom flushes, dual-flush failures, and pressure-assist toilets — going deeper on toilet diagnosis beyond basic flapper and fill valve replacement.</p>
+<div class="steps">
+<div class="step">Phantom flush every 20 minutes: the dye test confirms flapper leak. Run a finger around the flush valve seat — any roughness or mineral deposit and the seat needs replacing, not just the flapper.</div>
+<div class="step">Replacing a flush valve seat: requires draining the tank fully and using a seat removal tool. Apply a new seat washer ring and re-seat — this is the correct fix when a new flapper doesn't stop the phantom flush.</div>
+<div class="step">Dual-flush button one position flushes full volume: the seal between the upper and lower sections of the flush valve is worn. Replacement seal kits are model-specific — take a photo of the valve body to match parts.</div>
+<div class="step">Dual-flush button stuck or difficult to push: calcium deposits binding the button mechanism. Soak with white vinegar, work the button to free the deposits.</div>
+<div class="step">Pressure-assist toilet (loud whoosh when flushed): these use a pressurised vessel inside the tank. Never attempt to repair the vessel — if it fails, replace the entire pressure unit as an assembly. The outer tank is just a housing.</div>
+</div>`},
+                    {
+                        title: "Water hammer and noisy pipes", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Water hammer is hydraulic shock — a pressure wave when a valve shuts quickly. Chronic hammer damages joints and appliances. Ticking or creaking pipes are thermal expansion — a completely different problem with a different fix.</p>
+<table class="dtable">
+<thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Loud bang after appliance shuts off</td><td>Hydraulic hammer, no air cushion</td><td>Install hammer arrestors at washing machine supply; or recharge air chambers</td></tr>
+<tr><td>Banging in hot water pipes only</td><td>Thermal expansion in CPVC</td><td>Add expansion loops or flexible connectors; ensure pipes are properly supported</td></tr>
+<tr><td>Ticking/creaking through walls</td><td>Pipe rubbing against framing as it expands</td><td>Add foam insulation sleeve around pipe at the contact point</td></tr>
+<tr><td>Humming at high flow</td><td>PRV or fill valve vibration (worn diaphragm)</td><td>Replace PRV; replace fill valve</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "PEX supply line work and push-fit fittings", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "45 min",
+                        body: `<p>PEX has made supply-side repairs far more accessible. Push-fit failures are almost always installation errors, not product failures — the technique matters.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Cut PEX square — angled cuts prevent full seating. Use a dedicated PEX cutter, not a utility knife</li>
+<li><i class="fa-solid fa-check ci-green"></i>Mark insertion depth with a marker before pushing — you should see the mark disappear flush with the fitting body to confirm full seating</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Push-fit fittings are useful for accessible temporary repairs, but use crimp or clamp fittings behind walls and in concealed locations</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Never use push-fit fittings on corrugated stainless (CSST) or old PE pipe — only copper, CPVC, and PEX</li>
+</ul>
+<div class="callout callout-warn"><div class="callout-label">Behind walls</div><p>SharkBite allows in-wall use, but many inspectors prefer crimp or clamp rings in concealed locations. The failure mode of an unseated push-fit is a slow leak you won't discover until the ceiling shows water damage months later.</p></div>`}
+                ]
+            },
+            {
+                id: "electrical", label: "Electrical", eyebrow: "Module 2 of 7", title: "Electrical troubleshooting — 14 common problems",
+                intro: "Dead outlets, tripped breakers, flickering lights, GFCI trips, ceiling fans, dimmers, aluminium wiring and more — 14 of the most common electrical issues with diagnosis-first approaches and safe step-by-step fixes.",
+                lessons: [
+                    {
+                        title: "Dead outlets — tracing the real cause", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>A dead outlet is rarely a bad outlet. The fault is almost always upstream — a tripped GFCI, a loose backstab connection, or a wire nut that has vibrated loose. Replacing the outlet without tracing the circuit wastes time and misses the cause.</p>
+<div class="callout callout-diag"><div class="callout-label">Work upstream before opening anything</div><p>Check the panel first — a breaker can trip to a middle position that isn't clearly off. Then find and press RESET on every GFCI outlet in the bathroom, kitchen, garage, and exterior. A GFCI in the garage routinely protects bathroom or kitchen outlets downstream.</p></div>
+<div class="steps">
+<div class="step">Reset the breaker: firmly to OFF, then ON. A breaker that won't hold is a separate problem — don't keep resetting it.</div>
+<div class="step">Find and reset every GFCI outlet on the likely circuit — press firmly, they need positive engagement.</div>
+<div class="step">If still dead: pull the outlet and check for loose backstab connections. Move all wires to screw terminals.</div>
+<div class="step">Check the outlet upstream using a non-contact tester — power may have stopped at a loose wire nut in a junction box.</div>
+<div class="step">A plug-in circuit tracer ($30) maps every outlet on a circuit without touching wiring — invaluable on a first visit to any unfamiliar house.</div>
+</div>`},
+                    {
+                        title: "Tripped breakers that won't reset", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>A breaker that trips immediately on reset has an active fault. A breaker that trips only under load is usually an overloaded circuit or a failing breaker. These need different responses.</p>
+<div class="callout callout-diag"><div class="callout-label">Diagnosis</div><p>Trips immediately on reset = short circuit or ground fault. Unplug everything first. Trips only under load = overload or loose connection generating heat. Trips randomly with no load = failing breaker.</p></div>
+<div class="steps">
+<div class="step">Unplug every device on the circuit. Reset. If it holds, plug appliances back one at a time — the one that causes the trip has a fault.</div>
+<div class="step">If it trips with nothing plugged in, the fault is hardwired: a light, ceiling fan, or hardwired appliance. Disconnect them one at a time to isolate.</div>
+<div class="step">Overloaded circuit: a 15A circuit handles 1,800W continuous (80% of 2,250W). Kitchen countertop circuits should be dedicated 20A.</div>
+<div class="step">A breaker that trips at random with no fault found is a failing breaker — replace like-for-like. Brand matters; breakers are not universally interchangeable.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Never</div><p>Replace a breaker with a higher-rated one to stop nuisance tripping. The breaker protects the wire. A 14AWG wire on a 20A breaker will overheat before the breaker trips.</p></div>`},
+                    {
+                        title: "Flickering lights — diagnosis by pattern", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>The flicker pattern tells you almost everything about the cause before you touch a wire.</p>
+<table class="dtable">
+<thead><tr><th>Pattern</th><th>Cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>One bulb flickers, others fine</td><td>Loose bulb, failing LED driver, or incompatible dimmer</td><td>Re-seat bulb; replace bulb; check dimmer compatibility</td></tr>
+<tr><td>Whole room flickers together</td><td>Loose connection in the circuit</td><td>Inspect switch wiring and junction boxes on that circuit; tighten loose connections</td></tr>
+<tr><td>Whole house briefly when large appliance starts</td><td>Normal voltage sag from motor startup</td><td>No fix needed unless severe — then check service entrance connections</td></tr>
+<tr><td>Flickers correlate with neighbour's heavy use</td><td>Shared transformer or utility feed</td><td>Call the utility — not a house wiring problem</td></tr>
+<tr><td>Random whole-house flicker any time</td><td>Loose neutral at service entrance or meter base</td><td>Call the utility immediately — potentially dangerous</td></tr>
+</tbody>
+</table>
+<div class="callout callout-warn"><div class="callout-label">Take seriously</div><p>A loose neutral at the service entrance causes voltage imbalance between phases — lights brighten and dim while appliances run at wrong voltage. This destroys appliances and is a fire hazard. Call the utility that day.</p></div>`},
+                    {
+                        title: "GFCI outlets — nuisance trips and failures", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>A GFCI that trips frequently may be protecting you from a real fault — not just being a nuisance. The difference matters.</p>
+<div class="steps">
+<div class="step">Trips immediately on reset: active ground fault downstream. Disconnect everything on the LOAD side and test again. Add downstream loads back one at a time.</div>
+<div class="step">Trips with a specific appliance: test that appliance on a different non-GFCI circuit. If it trips there too, the appliance has a ground fault — retire it.</div>
+<div class="step">Trips on long outdoor runs with nothing plugged in: capacitive leakage in long cables. Install a GFCI rated for wet locations with a weatherproof while-in-use cover.</div>
+<div class="step">Won't reset even with everything disconnected: the GFCI itself has failed. Replace it — GFCIs fail safe (won't reset) rather than fail open. Lifespan is 10–15 years.</div>
+<div class="step">Test every GFCI monthly with the TEST button. If TEST doesn't cut power, the device has failed and must be replaced — it's providing no protection.</div>
+</div>`},
+                    {
+                        title: "Dead switches and replacement", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>A switch that stopped working is the switch itself, a loose connection, or a dimmer with an incompatible load. Run through this before buying parts.</p>
+<div class="steps">
+<div class="step">Confirm the circuit has power: test the outlet on the same circuit, or test the switch box with a non-contact tester before pulling it.</div>
+<div class="step">Pull the switch and inspect for loose terminals or burn marks. A scorch mark means arcing — fire risk. Replace the switch and inspect all wiring carefully.</div>
+<div class="step">Test the switch with a continuity tester (power off): toggle while probing the two terminals. Continuity in one position, none in the other = good. No change either way = dead switch.</div>
+<div class="step">Replacing: photograph wiring first. Note which terminal has the hot wire, reconnect to the same terminal on the new switch. Ground to green screw.</div>
+<div class="step">Dimmer flickering or buzzing: check the spec sheet for compatible load types. LED dimmers require LED-rated dimmers. Old dimmers with minimum load ratings don't work well with modern LEDs.</div>
+</div>`},
+                    {
+                        title: "Ceiling fan wobble, noise, and wiring", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>A wobbling ceiling fan is almost never a motor problem — it's blade balance or mounting. A humming fan on a dimmer is always a compatibility problem.</p>
+<div class="callout callout-diag"><div class="callout-label">Wobble diagnosis</div><p>Check blade brackets first — any blade slightly bent or with a loose bracket screw creates wobble. Use the balancing kit (included with most fans or $5) before assuming anything mechanical.</p></div>
+<div class="steps">
+<div class="step">Wobble: tighten every blade bracket screw. Check each blade for warp with a ruler across the face — a warped blade needs replacement, not balancing.</div>
+<div class="step">Balancing kit: clip to trailing edge at midpoint of each blade in turn. The one that reduces wobble most is the problem blade. Stick the permanent weight at the clip location.</div>
+<div class="step">Humming on a dimmer: ceiling fans need a fan speed controller, not a light dimmer. A light dimmer changes voltage in a way that causes the motor to hum and run hot.</div>
+<div class="step">New fan box: confirm the existing box is fan-rated (stamped on the box). A standard light box will fail from the dynamic load of a spinning fan. Use a fan-rated brace bar if upgrading.</div>
+<div class="step">Two-wire ceiling (no blue wire): connect both fan black and blue wires to the single ceiling black wire. Fan and light will be controlled together — for separate control, use a wireless remote kit.</div>
+</div>`},
+                    {
+                        title: "Bathroom exhaust fan replacement", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>A failed bathroom fan is one of the highest-value repairs a handyman can do — moisture without ventilation destroys paint, grows mould, and rots framing over years.</p>
+<div class="steps">
+<div class="step">Turn off the circuit breaker. Remove the grille and confirm power is off with a non-contact tester. Unplug the motor from the quick-disconnect inside the housing.</div>
+<div class="step">Measure the existing housing and duct diameter (3" or 4"). Buy a drop-in replacement motor for the same housing — avoids cutting drywall.</div>
+<div class="step">Replacing the full unit: disconnect duct, remove housing from between joists (held by side braces), disconnect cable from wiring connector.</div>
+<div class="step">Install new housing. Route duct to the exterior — never into the attic. Use smooth rigid duct; flex duct collects moisture and reduces airflow significantly.</div>
+<div class="step">Reconnect: black to black, white to white, ground to green. Connect duct with foil tape (not screws on flex duct — screws catch lint and restrict airflow).</div>
+<div class="step">CFM sizing: 1 CFM per square foot, minimum 50 CFM. Bathrooms with showers: 80 CFM minimum.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>Replace the flex duct to the exterior vent cap at the same time. Old flex duct is almost always partially crushed and full of lint — it's the single biggest improvement to fan performance for $15 of materials.</p></div>`},
+                    {
+                        title: "Outdoor GFCI and weatherproof outlet failures", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Outdoor outlets fail more often than any other type — moisture, UV, insects, and temperature cycling all attack them. Most failures are in the device or cover, not the wiring.</p>
+<div class="steps">
+<div class="step">Check the GFCI protecting the circuit first — almost always indoors (garage, kitchen). Reset it before doing anything outside.</div>
+<div class="step">Inspect the cover: a cracked or missing while-in-use cover lets water into the box. Replace before replacing the outlet.</div>
+<div class="step">Corrosion inside the box means the outlet needs replacement regardless of function — corroded terminals have high resistance and generate heat.</div>
+<div class="step">Replace with a WR (weather-resistant) GFCI rated for wet locations. Standard GFCI outlets are not rated for direct weathering.</div>
+<div class="step">Silicone seal the back of the box where the conduit enters before installing the cover plate — most common water entry point missed during installation.</div>
+</div>`},
+                    {
+                        title: "Aluminium wiring — safe connections and repairs", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Single-strand aluminium wiring (1965–73) is a documented fire hazard when connected to copper-only rated devices. Every connection point in the house needs to be addressed systematically.</p>
+<div class="callout callout-warn"><div class="callout-label">Identify it first</div><p>Aluminium wiring is silver-coloured and marked AL or ALUM on the insulation. The hazard is in 15A and 20A branch circuits only — not service entrance cable where aluminium is still used appropriately today.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Replace all devices (outlets, switches) with CO/ALR rated devices — the only devices rated for direct aluminium termination</li>
+<li><i class="fa-solid fa-check ci-green"></i>Apply Noalox anti-oxidant compound to all aluminium wire ends before connecting — aluminium oxidises quickly and the oxide increases resistance</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Join aluminium to copper only with AlumiConn connectors or Copalum crimp connectors — not purple wire nuts which are no longer recommended by the CPSC</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Never use standard wire nuts to join aluminium to copper — different expansion rates work the connection loose and generate heat</li>
+</ul>
+<div class="callout callout-info"><div class="callout-label">Full remediation</div><p>The only permanent fix is pigtailing every connection point with copper using AlumiConn connectors. Work systematically room by room with the panel map in hand.</p></div>`},
+                    {
+                        title: "Doorbell failures", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Doorbell systems run at 16–24VAC from a transformer and fail in predictable ways. The transformer, button, and chime unit each cost under $30 and replace individually.</p>
+<div class="steps">
+<div class="step">Press the button — no sound: briefly touch the chime's two wires together (low voltage — safe to touch). If the chime sounds, the button is dead — replace it ($8).</div>
+<div class="step">Chime doesn't sound when wires touched: test voltage at chime terminals with a multimeter (AC setting). Should read 16–24V. No voltage = transformer failed.</div>
+<div class="step">Transformer location: mounted on the panel side, a junction box near the main, or in the attic. 120V in, low voltage out.</div>
+<div class="step">Replace transformer: turn off its breaker, confirm dead with tester, disconnect 120V wires, remove old transformer, install new matching VA rating (typically 10–40VA).</div>
+<div class="step">Smart doorbells (Ring, Nest): require minimum 16V at 30VA. Many older homes have 10VA transformers — upgrade the transformer before blaming the doorbell unit.</div>
+</div>`},
+                    {
+                        title: "Smoke and CO detector issues", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>A chirping smoke detector at 3am is almost always a low battery or end-of-life alarm — neither requires an electrician.</p>
+<div class="callout callout-diag"><div class="callout-label">Chirp patterns</div><p>Single chirp every 30–60 seconds = low battery. Three beeps + pause = alarm (test for actual smoke/CO). Five beeps every minute = end of life, must be replaced. Continuous alarm in kitchen = responding to cooking — photoelectric type is better here.</p></div>
+<div class="steps">
+<div class="step">Chirping at night: pull unit from ceiling, disconnect, remove battery, hold TEST button 15 seconds to discharge capacitor — stops chirp immediately. Replace battery.</div>
+<div class="step">Hardwired unit still chirps after battery replacement: the backup battery is separate from AC power. Replace the 9V or AA backup inside.</div>
+<div class="step">Units older than 10 years: replace regardless — manufacture date is on the back. Replace with combination smoke/CO detector.</div>
+<div class="step">Interconnected system false chirps: all units must be the same brand and generation to interconnect correctly. Mixing brands causes random alarms.</div>
+</div>`},
+                    {
+                        title: "3-way and 4-way switch troubleshooting", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>A 3-way switch controls a light from two locations. When one position works and the other doesn't, the fault is almost always a miswired or failed switch — not the light fixture.</p>
+<p>Logic: current enters the first switch's common terminal, travels via one of two traveller wires to the second switch, exits via that switch's common to the light. Swapping the travellers reverses which position is ON — useful for diagnosing without buying parts.</p>
+<div class="steps">
+<div class="step">Identify the common terminal by the darker (black or darker brass) screw — not by wire colour, which varies by installer.</div>
+<div class="step">If both positions work in one location but not the other: the working switch is fine — pull the other switch first.</div>
+<div class="step">Test suspect switch with continuity tester (power off): toggle while probing common to each traveller. One position = continuity on one traveller; other position = continuity on the other traveller. If a position shows no continuity on either = dead switch.</div>
+<div class="step">Replacing: photograph before disconnecting. The common wire (dark screw) must go to the dark screw on the new switch — everything else follows from that.</div>
+</div>`},
+                    {
+                        title: "AFCI nuisance tripping", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Arc Fault Circuit Interrupters detect the electrical signature of arcing. Some appliances mimic that signature. The key is distinguishing a real fault from a false positive — never permanently disable an AFCI.</p>
+<table class="dtable">
+<thead><tr><th>What's tripping it</th><th>Why</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Vacuum cleaner</td><td>Motor brush arcing mimics wiring arcs</td><td>Plug into a non-AFCI circuit; or upgrade to brushless motor vacuum</td></tr>
+<tr><td>Older treadmill or power tool</td><td>Same brush arcing issue</td><td>Dedicated non-AFCI circuit for that tool</td></tr>
+<tr><td>Trips immediately on reset</td><td>Actual arc fault in wiring or a device</td><td>Disconnect all loads; add back one at a time; arcing devices feel warm at their plug</td></tr>
+<tr><td>Trips randomly, no identifiable cause</td><td>Loose connection on the circuit generating intermittent arcing</td><td>Inspect all outlets and switches for loose terminals; check junction boxes</td></tr>
+</tbody>
+</table>
+<div class="callout callout-warn"><div class="callout-label">Never permanently disable an AFCI</div><p>A real arc fault is a fire in progress. Find the cause — don't replace it with a standard breaker.</p></div>`},
+                    {
+                        title: "Understanding existing wiring by era", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Misidentifying the wiring type you're working with is one of the most dangerous mistakes in residential electrical work.</p>
+<table class="dtable">
+<thead><tr><th>Type</th><th>How to identify</th><th>Critical rules</th></tr></thead>
+<tbody>
+<tr><td>Knob and tube (pre-1940)</td><td>Single cloth-wrapped conductors on ceramic knobs; no ground wire</td><td>No ground — never connect grounded devices. Never cover with insulation — air-cooled by design. Do not add loads without electrician evaluation.</td></tr>
+<tr><td>Aluminium branch circuit (1965–73)</td><td>Silver wire marked AL or ALUM on jacket</td><td>CO/ALR devices only. Anti-oxidant compound on all terminations. AlumiConn or Copalum for copper pigtails only.</td></tr>
+<tr><td>Modern copper NM-B</td><td>NM-B on grey or white jacket; bare copper ground</td><td>Match wire gauge to breaker: 14AWG = 15A max, 12AWG = 20A max. Never exceed.</td></tr>
+<tr><td>Conduit (THHN/THWN)</td><td>Individual insulated conductors in metal or plastic conduit</td><td>Any colour can be hot if re-identified at terminations. Verify with a tester, never assume by colour.</td></tr>
+</tbody>
+</table>`}
+                ]
+            },
+            {
+                id: "hvac", label: "HVAC", eyebrow: "Module 3 of 8", title: "HVAC — 14 common problems",
+                intro: "Furnaces that won't start, AC that won't cool, frozen coils, capacitor failures, heat pumps, and duct leaks — 14 of the most common HVAC problems with the diagnostic sequence that gets you to the fix fast.",
+                lessons: [
+                    {
+                        title: "Furnace anatomy and the heating cycle", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>You can't diagnose what you don't understand. Every furnace failure is one step in this sequence that didn't complete — knowing the sequence tells you exactly where to look.</p>
+<table class="dtable">
+<thead><tr><th>Sequence step</th><th>Component</th><th>What you hear / see if it fails</th></tr></thead>
+<tbody>
+<tr><td>1. Call for heat</td><td>Thermostat</td><td>Thermostat signals, nothing happens = power or thermostat fault</td></tr>
+<tr><td>2. Inducer motor starts</td><td>Draft inducer</td><td>Whirring before burner. No sound = inducer or pressure switch fault</td></tr>
+<tr><td>3. Pressure switch verifies draft</td><td>Pressure switch</td><td>Inducer runs but igniter never glows = pressure switch or blocked flue</td></tr>
+<tr><td>4. Igniter heats up</td><td>Hot surface igniter</td><td>Should glow orange-red. Not glowing = igniter failed (most common fault)</td></tr>
+<tr><td>5. Gas valve opens</td><td>Gas valve</td><td>Click + whoosh. No click = control board or gas valve fault</td></tr>
+<tr><td>6. Flame sensor confirms flame</td><td>Flame sensor</td><td>Lights then shuts off in 2–5 sec = dirty or failed flame sensor</td></tr>
+<tr><td>7. Blower starts after delay</td><td>Blower motor</td><td>~60 sec after flame. No airflow = blower capacitor or motor fault</td></tr>
+</tbody>
+</table>
+<div class="callout callout-info"><div class="callout-label">Error codes</div><p>Modern furnaces flash an LED error code on the control board. Count the flashes and look up the code on the sticker inside the furnace door — it pinpoints exactly which step failed without guesswork.</p></div>`
+                    },
+                    {
+                        title: "Thermostat diagnosis and replacement", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>The thermostat is the easiest component to test and the one most people replace unnecessarily. Test it in 30 seconds before buying anything.</p>
+<div class="callout callout-diag"><div class="callout-label">Bypass test</div><p>At the furnace control board, briefly touch the W wire terminal to R. Furnace starts = thermostat or wiring fault. Nothing happens = furnace fault. This one test tells you which half of the system to focus on.</p></div>
+<div class="steps">
+<div class="step">Batteries first — a thermostat with weak batteries reads temperature incorrectly or stops communicating. Always.</div>
+<div class="step">Check the wiring terminals at the thermostat: R (24V power), C (common), W (heat), Y (cool), G (fan). A loose wire here causes the same symptom as a failed thermostat.</div>
+<div class="step">Smart thermostat: most require a C wire for continuous power. Many older systems only have R, W, Y, G at the wall. Options: run a new C wire from the furnace board, repurpose the G wire with a fan-only kit, or use a model with a built-in power adapter (Ecobee, some Nest models).</div>
+<div class="step">Replacement: photograph the wiring before removing anything. Label each wire with tape. Connect matching letters on the new thermostat. Test heating and cooling modes before putting the cover on.</div>
+</div>
+<div class="callout callout-warn"><div class="callout-label">Heat pump systems</div><p>Heat pumps use an O or B terminal for the reversing valve. Installing a standard furnace thermostat on a heat pump will damage the reversing valve. Always identify the system type — heat pump or gas/electric — before purchasing a replacement.</p></div>`
+                    },
+                    {
+                        title: "Furnace won't start — systematic diagnosis", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Work this sequence in order. Don't skip to replacing parts before you've confirmed which step in the startup sequence failed.</p>
+<div class="steps">
+<div class="step"><strong>Power:</strong> check the breaker. Also check the furnace power switch — it looks exactly like a light switch on the wall near the unit and gets flipped off accidentally more often than you'd think.</div>
+<div class="step"><strong>Filter:</strong> a completely clogged filter trips the high-limit switch, which cuts the igniter circuit. Pull and inspect before anything else — 20 seconds.</div>
+<div class="step"><strong>Gas supply:</strong> is the gas shutoff valve on the furnace open (handle parallel to the pipe = open)? Is other gas equipment in the house working?</div>
+<div class="step"><strong>Thermostat:</strong> set to HEAT, fan to AUTO, temp 5° above room temp. Do the W-to-R bypass test at the board to confirm whether the thermostat is sending the call.</div>
+<div class="step"><strong>Read the error code:</strong> the LED on the control board flashes a code sequence. Count the blinks, look it up on the sticker inside the door. This tells you exactly which step failed and saves 30 minutes of guesswork.</div>
+<div class="step"><strong>Inducer motor:</strong> do you hear it start (whirring sound)? If not — failed motor, seized bearing, or pressure switch preventing startup. Check for a blocked flue exhaust pipe first.</div>
+<div class="step"><strong>Igniter:</strong> if the inducer runs but burner never lights, watch through the sight glass. Igniter should glow bright orange-red. No glow = failed igniter, which is the single most common furnace fault.</div>
+</div>`
+                    },
+                    {
+                        title: "Hot surface igniter and flame sensor", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "35 min",
+                        body: `<p>These two components cause the majority of furnace no-heat calls. Both are $15–50 parts and straightforward to replace or service.</p>
+<div class="callout callout-diag"><div class="callout-label">Tell them apart by symptom</div><p>Igniter failed: furnace attempts to start, inducer runs, but the burner never ignites. No glow visible through the sight glass. Flame sensor dirty or failed: burner DOES light, runs 2–5 seconds, then shuts off and re-tries 2–3 times before locking out with an error code.</p></div>
+<div class="steps">
+<div class="step"><strong>Testing the igniter:</strong> power off, unplug the igniter. Set multimeter to resistance (Ω). Silicon nitride igniters: 40–90Ω. Silicon carbide: 40–70Ω. Open circuit (OL) = failed igniter. Replace.</div>
+<div class="step"><strong>Igniter replacement:</strong> these are fragile ceramic elements — never touch with bare hands. Skin oil creates a hot spot that cracks the element. Use a rag or gloves. Remove the single mounting screw, swap in the new one. Match the OEM part number from the furnace label.</div>
+<div class="step"><strong>Cleaning the flame sensor — 30-second fix:</strong> power off. Remove the single screw holding the flame sensor rod. Lightly buff the metal rod with fine steel wool or 400-grit emery cloth until it's bright metal. Reinstall. This resolves 80% of "lights and goes out" calls without any parts at all.</div>
+<div class="step"><strong>Testing flame sensor output:</strong> set multimeter to DC microamps (µA). Place probes in series with the sensor wire while the burner is lit. Should read 1–10 µA. Under 0.5 µA = clean or replace the sensor.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">First move on any "lights and goes out" call</div><p>If a furnace sat unused all summer, clean the flame sensor before ordering any parts. It costs nothing and resolves the fault more often than not.</p></div>`
+                    },
+                    {
+                        title: "Furnace short cycling", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Short cycling — starts, runs briefly, shuts off, restarts in minutes — is almost always an overheating problem. The furnace is protecting itself. Find why it's overheating before replacing parts.</p>
+<table class="dtable">
+<thead><tr><th>Cause</th><th>Diagnosis</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Clogged filter</td><td>Restricted airflow, filter visibly dirty</td><td>Replace filter — check this before anything else</td></tr>
+<tr><td>Blocked registers</td><td>Closed or furniture-blocked supply/return vents</td><td>Open all registers; maintain 6" clearance around returns</td></tr>
+<tr><td>Failing high-limit switch</td><td>Trips at normal temperature</td><td>Temporarily bypass to test; if furnace runs normally, replace the switch</td></tr>
+<tr><td>Cracked heat exchanger</td><td>CO alarm, flames waver when blower starts, soot around cracks</td><td>Shut down immediately — call HVAC tech; this is a CO risk</td></tr>
+<tr><td>Oversized furnace</td><td>Has always short-cycled since installation</td><td>Manual J load calculation; may require unit downsizing</td></tr>
+</tbody>
+</table>
+<div class="callout callout-warn"><div class="callout-label">Heat exchanger — stop and refer</div><p>If burner flames visibly waver or roll when the blower kicks on, or a CO detector alarms during furnace operation, shut the furnace off and do not restart it. Combustion gases in the living space is a life-safety issue. This is not a handyman repair.</p></div>`
+                    },
+                    {
+                        title: "Air conditioning not cooling — diagnosis", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "35 min",
+                        body: `<p>AC diagnosis follows the same supply-chain logic as any other system — start cheap and accessible, work toward expensive and technical.</p>
+<div class="callout callout-diag"><div class="callout-label">Triage by symptom</div><p>Runs but barely cools: dirty condenser coils or low refrigerant. Short cycles: frozen coil or low refrigerant. Won't start at all: capacitor or contactor fault. Runs but no airflow: blower issue. Ice on the line set: frozen evaporator coil (see Lesson 8).</p></div>
+<div class="steps">
+<div class="step"><strong>Filter:</strong> a dirty filter causes 30–40% of AC service calls. Always the first check.</div>
+<div class="step"><strong>Outdoor condenser coils:</strong> stand beside the outdoor unit — can you see daylight through the fins? If coils are packed with cottonwood seed, grass clippings, or debris, the unit cannot reject heat. Shut power off at the disconnect. Rinse from the inside out with a garden hose at low pressure. Never pressure-wash — bent fins are permanent damage.</div>
+<div class="step"><strong>Refrigerant signs:</strong> runs constantly but house barely cools; the large insulated suction line is not cold to the touch; ice builds on the line or coil. These point to low refrigerant. This requires an EPA 608-certified tech — it is illegal to handle refrigerants without certification.</div>
+<div class="step"><strong>Capacitor:</strong> outdoor unit hums but fan or compressor won't start = capacitor failure. See Lesson 7. This is within handyman scope and one of the highest-value HVAC repairs you can do.</div>
+<div class="step"><strong>Contactor:</strong> the magnetic switch that connects 240V to the compressor and condenser fan. Pitted or burned contacts cause intermittent operation. Inspect visually with power off — clear burn marks or fused contacts. A $15 part, straightforward to swap.</div>
+</div>`
+                    },
+                    {
+                        title: "Capacitor failure — the most common AC and furnace electrical fault", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Capacitors start and run electric motors. Every AC unit has at least one. When they fail, the motor hums but won't spin. An HVAC tech charges $200–400 for a $15–30 part and a 15-minute swap.</p>
+<div class="callout callout-warn"><div class="callout-label">Discharge before touching</div><p>A capacitor holds a lethal charge even with power off. Turn off power at the disconnect, wait 5 minutes, then short across the terminals with an insulated screwdriver before handling. No exceptions.</p></div>
+<div class="steps">
+<div class="step"><strong>Visual check:</strong> a bulged top or oil seeping from the bottom = failed. Replace without further testing. A normal-looking capacitor can still be dead — always test.</div>
+<div class="step"><strong>Testing:</strong> after discharging, set multimeter to capacitance (µF). Test across each terminal pair. Compare to the label. Within 10% of rated value is acceptable. More than 10% low = replace.</div>
+<div class="step"><strong>Dual-run capacitors:</strong> one can with three terminals — COMMON, HERM (compressor), FAN. Test HERM-to-COMMON and FAN-to-COMMON separately. One leg commonly fails while the other reads fine.</div>
+<div class="step"><strong>Replacement:</strong> photograph wiring before disconnecting. Match µF rating exactly for each leg. Voltage rating at or above the original is safe — below is not. Reconnect: C (common) to common leg, HERM to compressor, FAN to fan motor.</div>
+<div class="step"><strong>After replacing:</strong> restore power and watch startup. A compressor that tries and immediately trips off has a deeper fault (seized or shorted) — stop attempting restarts or you'll burn the windings.</div>
+</div>`
+                    },
+                    {
+                        title: "Frozen evaporator coil", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>A frozen coil stops your AC cold and can flood the condensate pan as it thaws. The cause is almost always restricted airflow — not refrigerant — and the fix starts with the filter.</p>
+<div class="callout callout-diag"><div class="callout-label">Signs of a frozen coil</div><p>AC runs continuously but produces little cooling. Ice visible on the large insulated suction line leaving the air handler. In severe cases, the air handler cabinet is iced over. Condensate pan overflowing.</p></div>
+<div class="steps">
+<div class="step"><strong>Thaw it:</strong> turn AC to OFF and fan to ON (fan-only mode). Room-temperature air thaws the coil in 1–4 hours. Do not chip the ice — coil fins are thin aluminium and destroy instantly.</div>
+<div class="step"><strong>Protect the area:</strong> lay towels around the air handler base. The condensate pan can overflow as ice melts. If a float switch (wet switch) shuts the unit off mid-thaw, that's correct behaviour — it prevented a flood.</div>
+<div class="step"><strong>Find the cause:</strong> replace the filter. Confirm all registers are open. After restarting, measure the temperature drop across the coil — should be 14–22°F (stick a thermometer in a return register and a supply register). Under 14°F with a clean filter = low refrigerant.</div>
+<div class="step"><strong>If it freezes again:</strong> refrigerant issue or failing blower motor. A system that repeatedly freezes after a filter change needs a certified tech for refrigerant diagnosis.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Prevention</div><p>Filter every 60 days. Never close more than 20% of supply registers — closing rooms to "redirect" airflow raises static pressure, drops coil surface temperature below freezing, and causes the exact problem you were trying to avoid.</p></div>`
+                    },
+                    {
+                        title: "Condensate drain blockage", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Central AC and high-efficiency furnaces produce several gallons of condensate per day. A blocked drain causes water damage, mould, and nuisance shutdowns from the float safety switch.</p>
+<div class="callout callout-diag"><div class="callout-label">Symptom map</div><p>AC shuts off without apparent cause = float switch tripped by standing water in the drain pan. Water pooling around the air handler = primary drain backed up. Water dripping from a secondary line over a window or through the soffit = primary has been blocked long enough to fill the overflow pan.</p></div>
+<div class="steps">
+<div class="step"><strong>Clear the primary drain:</strong> locate the capped PVC T-fitting near the air handler — the access point for the drain line. Pour 1 cup of white vinegar, wait 30 minutes. For a full blockage, seal a wet/dry vac hose around the outdoor drain terminus and vacuum the blockage out from that end.</div>
+<div class="step"><strong>Float switch reset:</strong> once the pan is empty and drain flows freely, the float switch resets automatically. Don't replace the switch for doing its job — find and fix the drain.</div>
+<div class="step"><strong>Trace the drain:</strong> follows gravity from the air handler to a floor drain, utility sink, or through an exterior wall. Common drain outlet locations: near the outdoor unit, through the foundation, into the utility sink.</div>
+<div class="step"><strong>Maintenance:</strong> monthly during the cooling season — pour 1/4 cup of distilled white vinegar or diluted bleach into the drain access. Prevents algae growth that causes 80% of blockages.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">High-efficiency furnaces</div><p>90%+ efficient furnaces produce condensate in winter — sometimes 3–4 gallons per day. Their drain lines run through attics or crawlspaces where they can freeze. A high-efficiency furnace that shuts off in cold weather: check whether the condensate line is frozen solid before anything else.</p></div>`
+                    },
+                    {
+                        title: "Filter selection and airflow problems", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>The wrong filter is one of the most overlooked causes of HVAC failures. More filtration is not always better — it comes at the cost of airflow.</p>
+<table class="dtable">
+<thead><tr><th>MERV rating</th><th>Filter type</th><th>Appropriate for</th></tr></thead>
+<tbody>
+<tr><td>1–4</td><td>Fibreglass flat panel</td><td>Basic equipment protection only. Rarely appropriate in a residential system.</td></tr>
+<tr><td>8–10</td><td>Pleated 1" polyester</td><td>Standard residential. Best balance of filtration and airflow. Most systems are designed around this range.</td></tr>
+<tr><td>11–13</td><td>High-efficiency pleated</td><td>Good for air quality — may restrict airflow in standard residential systems. Verify system specs.</td></tr>
+<tr><td>14–16</td><td>HEPA-equivalent</td><td>Only in systems engineered for high static pressure. Will restrict airflow and damage standard residential equipment.</td></tr>
+</tbody>
+</table>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>1" filters: change every 30–60 days. 4" media filters: every 6–12 months. This single maintenance item prevents more HVAC failures than everything else combined</li>
+<li><i class="fa-solid fa-check ci-green"></i>Arrow on the filter frame points toward the air handler — toward the blower, not toward the return grille</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Never close more than 20% of supply registers — closing rooms raises static pressure across the whole system and causes coil freezing or heat exchanger overheating</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>A MERV 13 filter in a system designed for MERV 8 restricts airflow 20–30% — equivalent to running with a partially clogged filter, every day, from the moment it's installed</li>
+</ul>`
+                    },
+                    {
+                        title: "Ductwork leaks — finding and sealing", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Leaky ducts waste 20–30% of HVAC capacity — heating or cooling the attic, crawlspace, or wall cavities instead of the living space. Return-side leaks also pull in unconditioned, unfiltered air.</p>
+<div class="callout callout-diag"><div class="callout-label">Find leaks without equipment</div><p>Run the system and hold a lit incense stick near all duct joints, take-off collars, and connections. Smoke pulled inward = return-side leak. Smoke blown away = supply-side leak. Rooms that are always uncomfortable despite open registers often have a leak on their branch run.</p></div>
+<div class="steps">
+<div class="step"><strong>Fix return-side leaks first:</strong> return ducts are under negative pressure and pull in attic or crawlspace air — unconditioned, often mouldy, and completely unfiltered. These cause air quality problems as well as efficiency losses.</div>
+<div class="step"><strong>Sealing material:</strong> use fibreglass-reinforced duct mastic (paste). Apply with a gloved hand or paintbrush. For gaps over 1/4", apply fibreglass mesh first, then mastic over it. Mastic stays flexible permanently and never peels — unlike any tape.</div>
+<div class="step"><strong>Not grey duct tape:</strong> cloth duct tape fails in 2–3 years in attic temperatures. Use UL 181-rated aluminium foil tape (3M 3340 or equivalent) if mastic isn't available. Grey duct tape on ductwork is always wrong.</div>
+<div class="step"><strong>Flex duct:</strong> check for disconnected boot collars (pops off during installation and hides inside the insulation jacket). Check for kinks — a 90° kink reduces airflow by over 50%. Reconnect boots with zip ties and seal seams with foil tape. Support every 4 feet to prevent sag that creates permanent kinks.</div>
+<div class="step"><strong>Priority leak points:</strong> plenum connections at the air handler, trunk-to-branch take-off collars, and boot-to-subfloor connections at registers. These are the highest-volume leak points on most systems.</div>
+</div>`
+                    },
+                    {
+                        title: "Heat pump basics and troubleshooting", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>A heat pump is an air conditioner that can reverse to provide heat. Understanding that distinction informs every diagnostic decision — a heat pump problem has different causes and different fixes than a furnace.</p>
+<div class="callout callout-info"><div class="callout-label">How it differs from a furnace</div><p>A heat pump moves heat — it doesn't create it. In heating mode, it extracts heat energy from outdoor air (even at 30°F there is usable heat) and moves it inside. Below about 35–40°F, efficiency drops and auxiliary electric strip heaters supplement. This is normal and by design.</p></div>
+<table class="dtable">
+<thead><tr><th>Symptom</th><th>Likely cause</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>Blows cold in heat mode</td><td>Reversing valve stuck in cooling position</td><td>HVAC tech — reversing valve replacement</td></tr>
+<tr><td>Outdoor unit solid block of ice, won't clear</td><td>Defrost board or sensor failure</td><td>HVAC tech — surface frost is normal, ice block is not</td></tr>
+<tr><td>Aux heat running constantly</td><td>Heat pump not contributing — outdoor unit fault or low refrigerant</td><td>Confirm outdoor unit is running. If not: capacitor/contactor (Lessons 7 and 6). If running: refrigerant — refer.</td></tr>
+<tr><td>Steam from outdoor unit in winter</td><td>Normal defrost cycle</td><td>Nothing — the heat pump is defrosting correctly. This surprises homeowners but is expected.</td></tr>
+<tr><td>Outdoor unit won't start</td><td>Capacitor, contactor, or refrigerant</td><td>Test capacitor first (Lesson 7). Check contactor contacts. Then refer to tech.</td></tr>
+</tbody>
+</table>
+<div class="callout callout-warn"><div class="callout-label">Emergency heat</div><p>Emergency heat bypasses the heat pump and runs only the electric strips — 3–4× more expensive per BTU. Use only when the heat pump has a confirmed mechanical failure. It should not be used just because it's very cold outside.</p></div>`
+                    },
+                    {
+                        title: "Blower motor and fan issues", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>The blower moves conditioned air through the house and draws return air back to the system. A blower fault affects both heating and cooling — the system runs but nothing moves.</p>
+<div class="callout callout-diag"><div class="callout-label">Symptom map</div><p>System fires (burner on or compressor humming) but no airflow at registers = blower not running. Airflow gradually reduced over months = dirty blower wheel. Loud grinding or squealing from inside the air handler = bearing failure. Airflow weak in certain zones only = duct issue, not blower.</p></div>
+<div class="steps">
+<div class="step"><strong>Capacitor first:</strong> the blower motor capacitor is the most common cause of "system runs but no airflow." Test as per Lesson 7. A $15 repair that resolves the majority of blower calls.</div>
+<div class="step"><strong>Blower wheel cleaning:</strong> if airflow has slowly decreased over years, the wheel is likely coated with debris on every fin. Shut power off, remove the blower assembly (usually 4 screws and a plug connector). Clean each fin with a stiff brush and compressed air. A loaded blower wheel reduces airflow 40–50%.</div>
+<div class="step"><strong>PSC motors (older systems):</strong> multi-speed, controlled by which winding terminal is connected at the control board. Blower runs on one speed but not another = that winding has failed. Replace the motor.</div>
+<div class="step"><strong>ECM motors (variable speed, newer systems):</strong> electronically controlled, very efficient. Before replacing, confirm a 24V control signal from the board to the motor module. If signal is present but motor won't run, the module has failed. ECM replacement is $300–600 — confirm diagnosis before ordering.</div>
+<div class="step"><strong>Bearing noise:</strong> grinding or squealing from the blower. Most residential blowers are direct-drive with sealed bearings — the motor is replaced, not lubricated. Belt-drive systems (older commercial/residential) can have the belt and bearings serviced separately.</div>
+</div>`
+                    },
+                    {
+                        title: "When to call an HVAC technician", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>Knowing your scope on HVAC is as important as knowing the repairs. The boundary between handyman and HVAC work is defined by law, safety, and physical access to the refrigerant circuit.</p>
+<div class="callout callout-diag"><div class="callout-label">Handyman scope on HVAC</div><p>Thermostat replacement, filter changes, capacitor replacement, condensate drain clearing, flame sensor cleaning, hot surface igniter replacement, outdoor coil rinsing, duct sealing, basic startup sequence diagnosis, and referral reporting. These resolve 50–60% of HVAC service calls.</p></div>
+<div class="callout callout-warn"><div class="callout-label">Refer to a licensed HVAC tech when</div><p>Refrigerant handling is required — purchasing or handling refrigerant without an EPA 608 certification is a federal violation. Cracked heat exchanger is suspected. Gas valve replacement is needed. Any work on combustion appliance flue or venting. Compressor replacement. Electrical work on the main panel or service feeding the HVAC disconnect.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>A precise diagnostic report — which step in the startup sequence failed, what you tested, what you ruled out — shortens the tech's job and positions you as the competent first responder</li>
+<li><i class="fa-solid fa-check ci-green"></i>Build a referral relationship with one HVAC contractor: you send them refrigerant and heat exchanger work, they send you thermostat replacements and maintenance calls. One of the most productive referral trades in the business.</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Confirm a working CO detector in every home with a gas furnace or boiler — before and after any furnace work. Carbon monoxide has no smell, and a cracked heat exchanger is a real possibility on any older unit</li>
+</ul>`
+                    }
+                ]
+            },
+            {
+                id: "carpentry", label: "Carpentry", eyebrow: "Module 3 of 7", title: "Carpentry — 14 common problems",
+                intro: "Sticky doors to squeaky stairs, rot assessment to load-bearing walls, cabinet alignment to deck boards — 14 of the most common carpentry issues with diagnosis and permanent fixes from 30 years on the job.",
+                lessons: [
+                    {
+                        title: "Sticky and misaligned doors", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>A door that sticks or swings open on its own isn't a door problem — it's a frame problem. Plane the door only after understanding why it's binding.</p>
+<div class="callout callout-diag"><div class="callout-label">Read the gap first</div><p>Binds at top-latch, drags at bottom-hinge = hinge side sagging. Binds at top-hinge, drags at bottom-latch = house has racked (soil movement or header deflection). Uniform binding on one side = stop bead shifted or frame swelled from moisture.</p></div>
+<div class="steps">
+<div class="step">Tighten all hinge screws first. Replace the middle screw in the top hinge with a 3" structural screw driving into the stud — fixes 40% of hinge-side sag.</div>
+<div class="step">Stripped hinge screw holes: fill with wood glue and toothpicks, cure 24 hours, re-drive.</div>
+<div class="step">Stop bead shifted: pry off, close the door, mark correct position, renail flush to the door face.</div>
+<div class="step">Planing: mark the binding area with chalk on the frame edge. Remove the door. Plane only the marked area — a belt sander with 80-grit is faster than a hand plane on painted doors.</div>
+<div class="step">Seasonal swell (only in summer): don't plane in winter — you'll create a gap. Seal all bare wood edges with primer and paint to reduce moisture absorption.</div>
+</div>`},
+                    {
+                        title: "Squeaky floors — from above and below", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>A squeak is two surfaces rubbing. The challenge is locating exactly which two. Subfloor on joist, hardwood boards on each other, and joist on hanger all produce squeaks but need different fixes.</p>
+<div class="steps">
+<div class="step">From below: have someone walk the floor while you watch from below. You can often see slight movement. Inject construction adhesive between subfloor and joist, then draw them together with a screw driven up through the joist — don't penetrate the finish floor.</div>
+<div class="step">Subfloor seam: drive 2" screws through the subfloor into the joist on both sides of the seam, every 6".</div>
+<div class="step">From above with carpet or hardwood: use Squeeeeek-No-More breakaway screws — the head snaps off below the finished floor surface.</div>
+<div class="step">Hardwood boards rubbing: force powdered graphite or talcum into the joint between squeaky boards. Work in with a stiff brush and flex the floor to distribute. Often eliminates the squeak without structural work.</div>
+<div class="step">Stairs: almost always the tread rubbing the riser. From below: apply construction adhesive at the tread-riser joint. From above: drive finish screws through the tread into the riser at an angle and fill holes.</div>
+</div>`},
+                    {
+                        title: "Squeaky stairs", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Stair squeaks are almost always the tread moving against the riser or the tread on the stringer. Thirty seconds of rocking your weight shows you exactly where the movement is.</p>
+<div class="steps">
+<div class="step">Identify precisely: tread front edge squeak = tread against riser. Back edge squeak = tread on stringer. The movement location tells you where to fasten.</div>
+<div class="step">Open staircase from below: construction adhesive into the tread-riser joint + small screws through the riser into the underside of the tread. Most permanent fix.</div>
+<div class="step">Closed staircase from above: pilot holes at steep angle through tread into riser, drive 2.5" finish screws, countersink, fill with wood filler.</div>
+<div class="step">Tread-stringer squeak: inject wood glue into the joint, weight overnight. If the joint is open, shim with a thin wood wedge dipped in glue.</div>
+<div class="step">Utility stair — all squeaks: install L-brackets underneath at every tread-riser joint. Not pretty, but eliminates all movement permanently.</div>
+</div>`},
+                    {
+                        title: "Bouncy floors — joists and subfloor", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>A bouncy floor is a structural deficiency. It's not usually dangerous immediately, but it gets worse and makes tile or hardwood crack and loosen.</p>
+<table class="dtable">
+<thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Whole bay bouncy, bridging missing</td><td>Joists undersized for span or no blocking</td><td>Add solid blocking at midspan; or add a mid-span beam with a post to the foundation</td></tr>
+<tr><td>Single joist noticeably deflecting</td><td>Improperly notched, drilled, or damaged joist</td><td>Sister a full-length joist alongside with adhesive and screws every 12"</td></tr>
+<tr><td>Bouncy near a wall</td><td>Joist hanger failure or inadequate bearing on sill plate</td><td>Install or replace joist hanger; ensure 1.5" bearing on sill plate</td></tr>
+<tr><td>Bounces near a partition wall above</td><td>Doubled joist under wall is split or missing</td><td>Sister a full-length joist on each side of the existing one</td></tr>
+</tbody>
+</table>
+<div class="callout callout-warn"><div class="callout-label">For tile floors</div><p>Ceramic or porcelain tile requires deflection no greater than L/360 (span in inches ÷ 360). A 12-foot span must deflect less than 0.4". If tile is cracking, the subfloor movement is the cause — adding backer board won't fix a floor that moves.</p></div>`},
+                    {
+                        title: "Rot assessment and repair", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>Surface rot looks worse than it is. Deep structural rot looks fine on the surface. The probe test is the only reliable assessment.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Use a stiff awl: probe 1" deep. Firm resistance = sound wood. Blade sinks easily = rot. Spongy, crumbly = active decay</li>
+<li><i class="fa-solid fa-check ci-green"></i>Surface rot on non-structural trim (under 25% cross-section): excavate all soft material, apply penetrating consolidant, fill with two-part epoxy filler — properly done, this outlasts wood replacement</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Structural members (sill plates, rim joists, posts, beams): if rot exceeds 25% of cross-section or runs full depth, replacement is the only correct call</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Find and eliminate the moisture source before any repair — without fixing the cause, you'll be doing the same job in 3 years</li>
+</ul>
+<div class="callout callout-warn"><div class="callout-label">Sill plates</div><p>Sill plate rot is common and almost always hidden behind drywall. If baseboard paint is bubbling or drywall feels soft at the bottom corner, probe the sill plate from the crawlspace. It's a common entry point for carpenter ants and termites too.</p></div>`},
+                    {
+                        title: "Load-bearing wall identification", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>The most dangerous carpentry mistake is cutting into a load-bearing wall thinking it's a partition. Here's how to read the structure before the saw comes out.</p>
+<div class="steps">
+<div class="step">Walls parallel to floor joists are almost always partitions. Walls perpendicular to joists are candidates for bearing walls.</div>
+<div class="step">Go to the basement or crawlspace. A bearing wall almost always has a beam, doubled joist, or foundation wall beneath it.</div>
+<div class="step">Check above: a wall under a ridge beam, under another wall above, or under a concentrated load (post, column) is bearing.</div>
+<div class="step">With engineered trusses: most interior walls are non-bearing — but never assume. Trusses transfer loads differently than stick framing.</div>
+<div class="step">When in doubt: a one-hour structural engineer consultation costs $200–400 and is worth every dollar before opening a wall. Frame it as part of the project cost to the client.</div>
+</div>`},
+                    {
+                        title: "Cabinet door alignment and adjustment", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Modern European cup hinges are adjustable in three axes. Almost every cabinet door alignment problem is solved without removing the door — just a screwdriver.</p>
+<div class="callout callout-info"><div class="callout-label">Three adjustments on every European hinge</div><p>In-out: the large screw nearest the cup moves the door closer to or further from the frame. Side-to-side: the mounting plate screw moves the door left or right. Up-down: loosen the mounting plate slotted screws, slide, retighten.</p></div>
+<div class="steps">
+<div class="step">Door not flush with adjacent doors: adjust the in-out screw (large screw at cup end). Clockwise brings door closer to the frame.</div>
+<div class="step">Door too high or low: loosen both mounting plate screws, slide up or down, retighten. Do both hinges together for even movement.</div>
+<div class="step">Door pulls left or right: adjust the side screw on both hinges in the same direction and by equal amounts.</div>
+<div class="step">Won't stay closed: adjust the magnetic catch position rather than fighting the hinge — the catch is independently adjustable.</div>
+<div class="step">Soft-close slamming: the damper is worn. Replacement soft-close dampers ($2 each) clip onto existing hinges — no need to replace the whole hinge.</div>
+</div>`},
+                    {
+                        title: "Drawer problems — won't close, falls out, binds", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>Drawer problems split into two categories: modern undermount/side-mount slide failures, and wood-on-wood binding in older cabinets. Each has a completely different fix.</p>
+<table class="dtable">
+<thead><tr><th>Symptom</th><th>Type</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Won't close fully, springs back</td><td>Modern undermount slide</td><td>Adjust the soft-close screw on the mechanism. Check for debris on the track.</td></tr>
+<tr><td>Falls out when pulled</td><td>Side-mount slide</td><td>The rear stop clip has broken. Replace it — $1 part that clips into the slide track.</td></tr>
+<tr><td>Stiff, hard to open</td><td>Wood-on-wood (older cabinet)</td><td>Sand drawer side rails lightly with 120-grit. Apply paste wax or dry PTFE spray — not WD-40, which attracts dust.</td></tr>
+<tr><td>Face is crooked</td><td>Modern undermount slide</td><td>Side-adjust screw behind the face panel — loosen, adjust, retighten.</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Deck board replacement", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>Replacing deck boards is straightforward — the harder part is assessing how many need replacing, whether the framing beneath is sound, and whether replacements will match weathered existing boards.</p>
+<div class="steps">
+<div class="step">Probe every board systematically with an awl, especially at ends where water pools on fasteners. Any board that takes the awl more than 1/4" easily needs replacing.</div>
+<div class="step">Inspect joist tops while boards are up — probe at every fastener location. Joist rot at fastener points is common and only discovered when boards come off.</div>
+<div class="step">Remove old boards: an oscillating tool cuts fasteners flush for screwed boards. For nailed boards, a pry bar under the board with a scrap wood fulcrum lifts them without splitting.</div>
+<div class="step">New boards: same species and thickness. Let acclimatise on-site 48 hours. Space with 1/8" gap (a 16d nail as spacer) for drainage and movement.</div>
+<div class="step">Colour matching: new pressure-treated lumber weathers grey over 6–12 months. Spot-staining new boards never matches. Apply deck stain to the entire deck after replacement if aesthetics matter.</div>
+<div class="step">Fastening: use stainless or hot-dip galvanised screws. Standard screws rust and stain the deck brown within a year. Pre-drill near board ends to prevent splitting.</div>
+</div>`},
+                    {
+                        title: "Fence post repair and replacement", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "45 min",
+                        body: `<p>Fence posts fail at ground level — where wood transitions from wet to dry repeatedly. The post above ground can look perfect while the base is completely rotten.</p>
+<div class="callout callout-diag"><div class="callout-label">Diagnose before digging</div><p>Push the post at the top with moderate force. Moves and springs back = surface lean, can be braced. Moves and stays = base has failed. Snaps at ground level = post is gone, needs full replacement.</p></div>
+<div class="steps">
+<div class="step">Leaning post with sound base: dig out one side, plumb with a level, pack gravel and concrete on the excavated side. Brace diagonally for 48 hours while concrete cures.</div>
+<div class="step">Failed post base: excavate around the post. If set in concrete, use a post puller or dig out the concrete entirely — trying to burn or rot it out wastes hours.</div>
+<div class="step">Partially rotted post (sound above, failed below): use a post repair spike (AKA Metpost). Drive the spike beside the old post stub, bolt to it — no concrete needed.</div>
+<div class="step">New post: use fast-set concrete (Quikrete Fast-Setting) poured dry into the hole, add water, no mixing. Sets in 20–40 minutes and is genuinely superior to wet-mixed for posts.</div>
+<div class="step">Depth rule: 1/3 of total post length in ground minimum. A 6-foot fence needs an 8-foot post with at least 24" in ground — 30" in frost-prone areas.</div>
+</div>`},
+                    {
+                        title: "Windows that won't open, close, or lock", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Window problems follow the same root causes as door problems: paint buildup, swelling from moisture, and hardware failure. The fix depends on whether it's double-hung, casement, or slider.</p>
+<table class="dtable">
+<thead><tr><th>Problem</th><th>Type</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Won't open — stuck shut</td><td>Double-hung (painted shut)</td><td>Score paint at sash with a utility knife. Tap a putty knife around the perimeter to break the seal. Never pry from the sash.</td></tr>
+<tr><td>Won't stay open</td><td>Double-hung</td><td>Broken sash balance. Replace the balance (available by window brand). Takes 20 minutes.</td></tr>
+<tr><td>Won't close fully</td><td>Casement</td><td>Lubricate the operator crank. If still binding, replace the operator — bolted to the frame.</td></tr>
+<tr><td>Lock won't engage</td><td>Any type</td><td>Sash misaligned with frame. Adjust the strike plate position — usually adjustable 2–3mm without moving hardware.</td></tr>
+<tr><td>Slider stiff to move</td><td>Horizontal slider</td><td>Clean track with brush, vacuum debris, apply silicone spray. Never WD-40 on window tracks — gums up.</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Baseboard and trim gaps", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>Gaps in baseboard are almost always wood movement — the trim shrank seasonally or the walls moved slightly. They come back if you just caulk without understanding why they opened.</p>
+<div class="steps">
+<div class="step">Assess: is the gap at the mitre joint (corner), at the wall-trim joint (top edge), or at the floor (bottom edge)? Each needs a different approach.</div>
+<div class="step">Mitre joint gaps: under 1/16", colour-matched caulk and paint. Wider: recut the mitre or switch to a coped joint — a cope overlaps and won't gap as wood moves.</div>
+<div class="step">Top edge gap at wall: the wall is not plumb or the trim is not straight. A bead of paintable caulk is the correct finish — this is standard practice on every professional paint job.</div>
+<div class="step">Bottom edge gap at floor: floor is not level. Scribe the baseboard to the floor — run a compass along the floor, pencil on the trim face, cut the scribed line with a jigsaw.</div>
+<div class="step">Reinstalling trim: construction adhesive on the back plus finish nails — adhesive prevents seasonal movement from reopening the joint. Wipe excess adhesive immediately with a damp cloth.</div>
+</div>`},
+                    {
+                        title: "Sagging gutters and downspout issues", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Gutters that sag or pull away from fascia are among the most ignored maintenance items. The fix is almost always a $5 hanger and 20 minutes — but the fascia behind it may be the real problem.</p>
+<div class="steps">
+<div class="step">Standing water after rain = sag or incorrect pitch. Gutters should slope 1/4" per 10 feet toward the downspout. Check with a string line.</div>
+<div class="step">Add hidden gutter hangers (screw-in type, not spike-and-ferrule). Drive a 2.5" hex screw through front and back of gutter, into fascia and rafter tail. Space at 24" maximum.</div>
+<div class="step">Gutter pulling away from fascia: probe the fascia first — if it's soft, the fascia is rotted and must be replaced before re-hanging. A gutter hung on rotted fascia will pull away within a season.</div>
+<div class="step">Downspout joint leaking: reseal from inside with gutter sealant. The upper section always inserts into the lower — water going the wrong way through a joint leaks regardless of sealant.</div>
+<div class="step">Missing downspout extension: extend at least 6 feet from the foundation, or connect to a buried drain. This is one of the highest-value fixes for preventing foundation water intrusion.</div>
+</div>`},
+                    {
+                        title: "Attic hatch air sealing and insulation", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>An unsealed attic hatch is one of the biggest energy leaks in a house — a 1 sq ft gap at ceiling height loses as much heat as a window open 3 inches all winter. Takes under an hour to fix properly.</p>
+<div class="steps">
+<div class="step">Test by touch on a cold day: draught at the perimeter = unsealed gaps. Condensation on or around the hatch = air leakage and insufficient insulation.</div>
+<div class="step">Add closed-cell foam weatherstripping (1/2" thick, medium density) to the hatch frame perimeter. The hatch must compress the foam when closed to create a seal.</div>
+<div class="step">Insulate the hatch door: cut rigid foam board (polyiso or XPS, R-10 minimum) to fit the top. Glue with foam board adhesive. Add a second layer to reach R-30 in cold climates.</div>
+<div class="step">Pull-down attic stairs: weatherstrip the frame perimeter, insulate the door panel, or build an insulated cover that sits over the opening from the attic side.</div>
+<div class="step">While up there: check insulation depth. R-49 minimum for most climate zones (roughly 14" blown cellulose or 15" blown fibreglass). If you can see the tops of the joists, the house is under-insulated.</div>
+</div>`}
+                ]
+            },
+            {
+                id: "drywall", label: "Drywall", eyebrow: "Module 4 of 7", title: "Drywall — 14 common problems",
+                intro: "From nail pops to invisible patches, texture matching to persistent cracks — 14 of the most common drywall issues with diagnosis-first approaches and the finishing technique that makes repairs disappear.",
+                lessons: [
+                    {
+                        title: "Why patches show through paint", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>A patch that photographs perfectly but shows as a dull spot in raking light is called flashing — almost always a priming failure, not a finishing failure.</p>
+<div class="callout callout-diag"><div class="callout-label">Why it happens</div><p>Fresh joint compound is highly porous. Unprimed, it absorbs paint unevenly — the patch absorbs more, leaving it flatter and less reflective. The fix is sealing the compound before painting, not adding more topcoats.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Apply a dedicated PVA drywall primer over all compound — not standard wall primer, which doesn't seal compound porosity</li>
+<li><i class="fa-solid fa-check ci-green"></i>After PVA primer dries, skim one more thin coat over any pinholes, sand, and prime again — two primer coats over compound is the professional standard</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>If the wall sheen is eggshell or higher, repaint the entire wall to the nearest corner — spot-painting a satin wall always shows in raking light regardless of primer quality</li>
+</ul>`},
+                    {
+                        title: "Nail pops and screw pops", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>Nail pops are circular bumps caused by lumber shrinkage pushing the fastener out. The correct fix takes 5 minutes per pop if you don't skip steps — and it won't come back.</p>
+<div class="steps">
+<div class="step">Drive a new drywall screw 2" above and below the popped fastener — this re-secures the drywall panel to the stud.</div>
+<div class="step">Now drive the popped fastener deeper — it'll go further because the new screws hold the panel. Dimple it slightly below the surface.</div>
+<div class="step">Apply two coats of lightweight compound over all three fasteners, feathering 4–6" around each.</div>
+<div class="step">Sand, prime with PVA, paint. The repair is invisible. If you only fill without adding the new screws, the pop will return within a season.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>Multiple pops appearing simultaneously after a dry spell indicate rapid moisture change causing widespread lumber movement — check attic humidity and roof drainage before treating each one individually.</p></div>`},
+                    {
+                        title: "Small hole patching — under 6 inches", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>Holes under 6 inches need no backing. A self-adhesive mesh patch and two coats of compound is faster and just as strong. The mistake is applying compound too thick on the first coat.</p>
+<div class="steps">
+<div class="step">Clean hole edges — remove any loose paper or crumbling gypsum with a utility knife.</div>
+<div class="step">Apply a self-adhesive fibreglass mesh patch centred over the hole. Press firmly — the mesh must be fully adhered or it'll lift during mudding.</div>
+<div class="step">First coat: apply compound with a 6" knife, working it firmly into the mesh. Feather at least 4" beyond the mesh on all sides. Let dry completely — overnight is better than 4 hours.</div>
+<div class="step">Second coat: use a 10" knife over a wider area. Goal is to make edges imperceptible. Let dry fully.</div>
+<div class="step">Sand with 120-grit on a sanding sponge, wipe clean, PVA prime, then paint. Run your hand over in raking light — find any ridges before you paint.</div>
+</div>`},
+                    {
+                        title: "Large hole repair — the California patch", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "45 min",
+                        body: `<p>For holes 6–12 inches, the California patch (butterfly patch) uses the drywall paper itself as backing. No backer boards, no clips — and in 30 years it's still my preferred method for this size range.</p>
+<div class="steps">
+<div class="step">Cut a piece of new drywall larger than the hole (hole is 6×6", cut patch 9×9"). Score the back paper 1.5" from each edge. Snap and remove the gypsum, leaving a 1.5" paper border all around.</div>
+<div class="step">Hold the patch over the hole and trace around the gypsum core. Cut the wall along that line — now the hole exactly matches the patch core.</div>
+<div class="step">Apply compound to the wall around the hole, press the patch in place so the paper border lays flat on the wall surface. Embed the paper border fully into the compound.</div>
+<div class="step">First coat: skim over the entire patch, feathering 8–10" beyond the paper edges. The paper acts as tape — it bridges the hole and provides the key for compound.</div>
+<div class="step">Two more coats, each feathered wider. Sand, prime, paint. When done correctly this repair is completely invisible.</div>
+</div>`},
+                    {
+                        title: "Large hole repair — backer board method", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "45 min",
+                        body: `<p>For holes larger than 12 inches, or where you need to cut to studs, a backer-board patch with the cut taken to stud centres is the correct approach.</p>
+<div class="steps">
+<div class="step">Locate nearest studs on both sides of the hole. Mark stud centres. Cut the hole to a clean rectangle with sides running down the centre of each stud.</div>
+<div class="step">Check for pipes and wires before cutting — use a battery-powered light inside the cavity. Cutting blindly is how plumbing repairs get created on drywall jobs.</div>
+<div class="step">Cut a drywall piece to fit the opening exactly. Fasten with drywall screws into the studs — screws every 8" along each stud edge.</div>
+<div class="step">Tape all four joints with paper tape embedded in compound. At butt joints, paper tape is always stronger than mesh — use paper here.</div>
+<div class="step">Three coats, each wider, with full drying between coats. Match existing wall texture before painting.</div>
+</div>`},
+                    {
+                        title: "Texture matching — orange peel, knockdown, skip trowel, popcorn", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "50 min",
+                        body: `<p>Texture matching is the skill that separates an invisible repair from one that announces itself. Practice on cardboard until you've matched consistency and technique before touching the wall.</p>
+<table class="dtable">
+<thead><tr><th>Texture</th><th>Identification</th><th>Technique</th></tr></thead>
+<tbody>
+<tr><td>Orange peel</td><td>Uniform small bumps, no peaks, looks like citrus skin</td><td>Thin compound to milk consistency. Hopper or aerosol at 18". Multiple light passes — one heavy pass creates runs.</td></tr>
+<tr><td>Knockdown</td><td>Flat irregular islands with distinct edges</td><td>Splatter thicker compound. Let tack 5–10 min (timing is critical). Drag a wide knife almost flat across the surface.</td></tr>
+<tr><td>Skip trowel</td><td>Irregular arcs and partial-circle patterns, hand-applied look</td><td>Load a trowel with stiff compound, skip across surface at low angle in curved strokes. Irregular is correct.</td></tr>
+<tr><td>Popcorn / acoustic</td><td>Chunky, rough ceiling texture with aggregate</td><td>Match bag product (coarse vs. medium) to existing. Hopper at 25–30 psi. Nearly impossible to match on a small patch — often better to scrape and retexture the whole ceiling.</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Persistent cracks — finding the active cause", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "35 min",
+                        body: `<p>A crack that comes back after patching has an active cause. Filling it again without addressing that cause is a 6-month fix.</p>
+<table class="dtable">
+<thead><tr><th>Pattern</th><th>Cause</th><th>Permanent fix</th></tr></thead>
+<tbody>
+<tr><td>Hairline at ceiling/wall joint, runs room length</td><td>Normal seasonal wood movement; truss uplift in cold climates</td><td>Remove paint at joint, apply flexible paintable caulk — caulk flexes with movement, compound doesn't</td></tr>
+<tr><td>Diagonal cracks from door or window corners</td><td>Header deflection, lintel settling, or foundation movement</td><td>Monitor with crack monitor 3 months. Growing = structural engineer. Stable = fibreglass mesh + 3 coats compound.</td></tr>
+<tr><td>Horizontal crack at mid-wall, multiple rooms</td><td>Significant foundation settlement</td><td>Structural investigation before any cosmetic repair — do not cover this without understanding it</td></tr>
+<tr><td>Map cracking (web of small cracks)</td><td>Old oil-based paint over incompatible coating, or plaster dried too fast</td><td>Skim coat the entire surface with setting compound (Durabond) — patching individual cracks is futile</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Water-stained ceilings", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Never paint over a water stain without finding and fixing the source and sealing the stain. Water stains bleed through any number of latex paint coats.</p>
+<div class="steps">
+<div class="step">Find the source: inspect the attic above and look for the moisture entry point. Water travels along framing — the stain may be 2–4 feet from the actual leak.</div>
+<div class="step">Let the ceiling dry completely after the source is fixed — minimum 2 weeks in normal conditions, or confirm below 12% moisture content with a moisture meter.</div>
+<div class="step">If the drywall is soft or crumbly, it must be replaced — waterlogged drywall loses structural integrity and won't hold paint or compound.</div>
+<div class="step">Seal the stain with shellac-based primer (Zinsser BIN) or oil-based stain blocker. Two coats for dark stains. This is non-negotiable — water stains contain minerals and tannins that bleed through latex paint indefinitely.</div>
+<div class="step">Skim coat any surface damage, sand, PVA prime, paint. Repaint the entire ceiling rather than spot-painting — sheen differences always show on ceilings.</div>
+</div>`},
+                    {
+                        title: "Drywall in bathrooms — moisture damage and repair", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>Bathroom drywall failures are almost always substrate failures — the wrong board was used or moisture found its way behind it. You're not just patching; you're correcting a systemic error.</p>
+<div class="callout callout-warn"><div class="callout-label">Critical rule</div><p>Standard drywall must never be used in wet areas. Moisture-resistant (green board / purple board) is the minimum for bathroom walls. In shower and tub surrounds, cement board (Durock, HardieBacker) is required behind tile. Drywall of any type is wrong behind tile.</p></div>
+<div class="steps">
+<div class="step">Probe damaged area: soft drywall, delaminated paper, or mould behind the surface all mean the substrate must be replaced, not patched.</div>
+<div class="step">Cut out all damaged material. Look behind — if framing is wet or mouldy, let it dry and treat with a mould-inhibiting primer before re-covering.</div>
+<div class="step">Replace with correct substrate: moisture-resistant drywall for dry-side bathroom walls, cement board for any tiled area.</div>
+<div class="step">Tape cement board joints with fibreglass mesh tape and thinset (not joint compound). Joint compound dissolves with moisture.</div>
+<div class="step">Caulk all corners in tiled areas with flexible silicone — not grout. Corners move; grout cracks. Silicone stays waterproof 7–10 years then can be stripped and replaced.</div>
+</div>`},
+                    {
+                        title: "Ceiling cracks — truss uplift and settlement", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Ceiling cracks can indicate roof structure movement — but most are benign. Reading the pattern correctly tells you the difference.</p>
+<table class="dtable">
+<thead><tr><th>Pattern</th><th>Cause</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>Straight crack parallel to a beam or wall</td><td>Drywall joint failure — tape bond failed</td><td>Re-tape the joint: scrape out loose compound, apply new paper tape embedded in compound, 3 coats</td></tr>
+<tr><td>Crack at ceiling-wall junction, worst in winter</td><td>Truss uplift: trusses bow upward in cold dry weather</td><td>Do not nail partition tops to trusses. Repair with caulk, not compound — the crack returns if compound is used</td></tr>
+<tr><td>Large irregular crack across multiple rooms</td><td>Foundation settlement or structural movement</td><td>Install crack monitors. If growing: structural engineer before repair</td></tr>
+<tr><td>Fine map cracking on plaster ceiling</td><td>Aged plaster — normal for 60+ year old homes</td><td>Skim coat entire ceiling with setting compound — patching individual cracks in aged plaster is futile</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Skim coating — fixing bad walls", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "50 min",
+                        body: `<p>When a wall has too many patches, old roller stipple, or uneven texture, skim coating the entire surface is often faster and gives a better result than fixing each problem individually.</p>
+<div class="steps">
+<div class="step">Prepare: fix all structural problems first — pops, cracks, holes. Skim coating over movement will crack. Prime the entire wall with PVA primer to seal and prevent the skim coat drying too fast.</div>
+<div class="step">Mix joint compound to smooth peanut-butter consistency. Use a 12" or 14" knife for large areas. Work in 4×4 sections.</div>
+<div class="step">First coat: 1/16" thick layer, feathering all edges to nothing. The wall looks rough wet and better dry — resist the urge to over-work it.</div>
+<div class="step">Sand with 120-grit on a pole sander. Knock off ridges and tool marks, not down to the original surface. Wipe clean — compound dust kills paint adhesion.</div>
+<div class="step">Second coat at 90° to the first — fills the valleys from the first coat's ridges. Sand, PVA prime, paint. Two skim coats over a properly prepared wall produces a smooth professional surface.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>Add 10–20% plaster of Paris to joint compound for skim coating — speeds drying and reduces shrinkage cracking. Test the ratio on a small area first; too much and it sets before you can work it.</p></div>`},
+                    {
+                        title: "Corner bead — installation, damage, and repair", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>A damaged corner bead looks like a drywall problem but is a substrate problem — the bead itself has bent and no amount of re-mudding holds until the bead is replaced.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Use vinyl bead in impact-prone corners — it flexes rather than denting, and doesn't crack the compound above it</li>
+<li><i class="fa-solid fa-check ci-green"></i>Install metal bead with a crimper every 6", not nails or screws — fasteners create hard spots that telegraph through finish coats</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Before re-mudding a damaged corner: lay a straightedge along the bead. Any deviation over 1/16" = bead must be replaced, not re-coated</li>
+<li><i class="fa-solid fa-check ci-green"></i>Add fibreglass mesh tape over a repaired corner bead before first coat — it bridges the gap between bead and drywall and prevents cracking when the corner takes another bump</li>
+</ul>`},
+                    {
+                        title: "Drywall screws — correct technique and depth", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "20 min",
+                        body: `<p>More drywall repairs are caused by bad installation technique than by damage. A screw driven too deep tears the paper face — a screw not deep enough creates a bump.</p>
+<div class="callout callout-diag"><div class="callout-label">The dimple test</div><p>Run your hand over installed drywall. Each screw should leave a slight dimple — enough to hold compound — but you should not feel torn paper around it. Torn paper = screw went too deep, add a companion screw 2" away.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Use a drywall screw gun with a depth-stop bit — this is non-negotiable for consistent quality</li>
+<li><i class="fa-solid fa-check ci-green"></i>Screw spacing: 16" on ceilings, 24" on walls (for standard 1/2" board)</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Never drive screws within 3/8" of the drywall edge — the gypsum crumbles and the screw has no holding power</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Drywall nails are inferior to screws in every application — nails pop, screws don't. There is no good reason to use nails for new drywall work</li>
+</ul>`},
+                    {
+                        title: "Setting-type vs. drying-type compound — when to use each", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "20 min",
+                        body: `<p>Most DIY drywall failures come from using the wrong compound for the application. These are fundamentally different materials — not just different brands.</p>
+<table class="dtable">
+<thead><tr><th>Type</th><th>How it works</th><th>Best uses</th><th>Avoid for</th></tr></thead>
+<tbody>
+<tr><td>Drying-type (all-purpose, lightweight)</td><td>Dries by water evaporation — shrinks as it dries</td><td>Taping, finish coats, texturing, skim coating</td><td>Filling gaps over 1/4" — excessive shrinkage causes cracking</td></tr>
+<tr><td>Setting-type (Durabond, Easy Sand)</td><td>Hardens by chemical reaction — minimal shrinkage</td><td>First coat over backer board, large voids, humid areas, embedding tape on difficult repairs</td><td>Finish coats — too hard to sand smoothly by hand</td></tr>
+</tbody>
+</table>
+<div class="callout callout-info"><div class="callout-label">The hybrid approach</div><p>Use Easy Sand 45 for the first coat on any repair deeper than 1/4" or in damp conditions — fills without shrinkage. Switch to all-purpose drying compound for second and third coats — easier to sand and feather smoothly.</p></div>`}
+                ]
+            },
+            {
+                id: "painting", label: "Painting", eyebrow: "Module 5 of 7", title: "Painting — 14 common problems",
+                intro: "Paint failures, colour matching, sheen selection, stain blocking, trim technique, exterior problems, and the professional approaches that make work last — from someone who has rolled more square footage than most people have seen.",
+                lessons: [
+                    {
+                        title: "Diagnosing paint failures", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Peeling, blistering, and alligatoring look similar from across the room but have completely different causes. Painting over a failure without diagnosing it guarantees a repeat.</p>
+<table class="dtable">
+<thead><tr><th>Failure</th><th>Cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Peeling in sheets (intercoat failure)</td><td>Painted over glossy surface without abrading, or over contamination (grease, wax, silicone)</td><td>Strip to substrate, clean with TSP, scuff with 80-grit, bond primer</td></tr>
+<tr><td>Peeling from substrate</td><td>Moisture behind the paint pushing it off</td><td>Fix moisture source first. Strip, dry, prime with moisture-blocking primer</td></tr>
+<tr><td>Blistering (bubbles)</td><td>Painting in direct sun on hot surface; moisture migrating through wall</td><td>Strip blistered area. Repaint in shade, surface temp below 90°F</td></tr>
+<tr><td>Alligatoring</td><td>Hard topcoat over soft undercoat; applying too soon over oil paint</td><td>Strip fully, re-prime with flexible alkyd primer, allow full cure</td></tr>
+<tr><td>Chalking exterior</td><td>Normal aging of oil-based paint; accelerated by UV</td><td>Wire brush off chalk, wash with TSP solution, bond prime before recoating</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Lap marks and roller stipple", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Lap marks and roller stipple are the two most common application problems. Both are avoidable — and nearly impossible to fix once the paint has dried.</p>
+<div class="steps">
+<div class="step">Lap marks: caused by rolling back into a section that has started to skin over. Prevention: work full-height sections without stopping. On large walls, cut in and roll before cut-in dries.</div>
+<div class="step">Wet edge management: always feather each stroke back into the wet section. Never start in a dry area and roll into wet — that deposits a double layer at the transition.</div>
+<div class="step">Roller stipple (texture peaks): caused by a cheap or wrong-nap roller. Smooth walls: 3/8" nap. Textured walls: 1/2"–3/4". Cheap covers shed fibres and leave peaks.</div>
+<div class="step">Lay-off technique: after rolling a section, lightly roll back over it with a nearly dry roller in long vertical strokes — presses down stipple texture before it dries.</div>
+<div class="step">Add Floetrol (latex) in warm or dry conditions: extends open time, reduces lap marks, improves flow significantly. Worth adding on any hot day.</div>
+</div>`},
+                    {
+                        title: "Cutting in — technique for clean edges", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>A clean cut-in line is the mark of a professional paint job. It takes the right brush, the right loading technique, and practice — not tape on every edge.</p>
+<div class="steps">
+<div class="step">Brush: 2.5" angled sash brush. A quality brush (Purdy, Wooster) loads more paint, releases evenly, holds an edge. Cheap brushes can't do this regardless of technique.</div>
+<div class="step">Loading: dip 1/3 of bristle length. Tap (don't wipe) each side on the inside of the can. Loads without overloading — a dripping brush makes a mess.</div>
+<div class="step">The stroke: start 1/2" from the line, press until the bristles fan out, then draw toward the line. The fanned bristles create the controlled edge. Never lead with the tip.</div>
+<div class="step">Ceiling line: look ahead of the brush, not at the bristles. Keep a damp rag in your free hand to wipe any runs immediately. Angle a torch along the ceiling to reveal mistakes while still wet.</div>
+<div class="step">Roll before the cut-in dries: cut-in and rolled sections must blend while both are wet. If the cut-in has dried and you roll up to it, you'll see the line. Cut a manageable section, then roll immediately.</div>
+</div>`},
+                    {
+                        title: "Painting bare wood trim", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Bare wood trim is the most demanding interior painting surface. Get the preparation right and it lasts 10 years. Skip steps and you'll be back within 2.</p>
+<div class="steps">
+<div class="step">Sand all bare wood with 120-grit then 180-grit, with the grain. Fill nail holes and open grain with wood filler, let dry, sand flush.</div>
+<div class="step">Primer: oil-based primer (or water-based alkyd) penetrates wood better than latex and raises the grain less. Apply one coat, let dry 24 hours.</div>
+<div class="step">After priming, sand lightly with 220-grit before the topcoat — water-based primers raise the grain. Skip this sanding and the finish feels rough. This is the step most people omit.</div>
+<div class="step">Topcoat: water-based alkyd (Benjamin Moore Advance, SW Emerald Urethane) levels significantly better than standard latex and dries to a harder film. Two coats, sand between with 220-grit.</div>
+<div class="step">End grain on horizontal trim: prime end grain separately, let soak in before the field coat. End grain is extremely absorbent and telegraphs as a dull patch if not addressed separately.</div>
+</div>
+<div class="callout callout-info"><div class="callout-label">Pro tip</div><p>Caulk trim after the first topcoat, not before priming. Caulk applied before primer often peels away from the paint within a year. Applied after the first topcoat, it bonds properly and stays put for 5–7 years.</p></div>`},
+                    {
+                        title: "Oil-based vs. water-based — where it still matters", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>Modern water-based alkyds have largely closed the performance gap — but there are still situations where choosing wrong costs you a repaint.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Bare wood trim: water-based raises grain and requires an extra sanding pass. Oil or water-based alkyd skips this and levels better on open-grained woods</li>
+<li><i class="fa-solid fa-check ci-green"></i>Over existing oil-based paint: adhesion test first — score an X, press tape, pull. If paint lifts, scuff with 80-grit before recoating</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Never use standard latex directly over oil without bonding primer — latex can't grip a slick, non-porous oil surface and will peel within months</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Stain blocking: only shellac-based (BIN) or oil-based (Kilz Original) reliably blocks water stains, smoke, and tannin bleed — water-based stain blockers fail on these within weeks</li>
+</ul>
+<div class="callout callout-info"><div class="callout-label">Practical rule</div><p>Use water-based alkyd for trim, water-based latex for walls. Reserve oil-based for problem surfaces and floors. The cleanup is easier, dry time faster, durability equivalent for interior work.</p></div>`},
+                    {
+                        title: "Colour matching without a spectrophotometer", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>The hardware store scanner gets you close — rarely perfect. Metamerism and batch variation mean even a "perfect" match can look wrong in the room.</p>
+<div class="steps">
+<div class="step">Bring a 3"×3" minimum chip. The scanner needs clean, unobstructed painted surface. No substrate, no wallpaper, no trim showing at edges.</div>
+<div class="step">Buy a quart, paint a 12"×12" sample on the actual wall. View it under different lighting at different times of day — morning sun, afternoon sun, evening artificial light. Matches under store fluorescents often diverge in the room.</div>
+<div class="step">Too warm: ask the tinter to add a half-pump of raw umber. Too cool: half-pump of yellow oxide. These small adjustments can be made to a custom mix.</div>
+<div class="step">Close but not invisible: paint corner-to-corner. The eye detects colour differences mid-wall readily and is very forgiving at natural break points.</div>
+<div class="step">Paint over 5 years old: it has faded. A perfect mix of the original formula will look brighter. Ask the tinter to reduce the formula by 5–10% across all pigments to compensate.</div>
+</div>`},
+                    {
+                        title: "Sheen selection and sheen problems", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "20 min",
+                        body: `<p>Sheen affects both appearance and durability — and wrong sheen for the application is one of the most common paint job mistakes.</p>
+<table class="dtable">
+<thead><tr><th>Sheen</th><th>Best for</th><th>Avoid on</th></tr></thead>
+<tbody>
+<tr><td>Flat / matte</td><td>Ceilings, low-traffic bedrooms, hiding wall imperfections</td><td>Kitchens, bathrooms, kids' rooms — doesn't clean well</td></tr>
+<tr><td>Eggshell</td><td>Living rooms, dining rooms, hallways</td><td>Ceilings — shows roller marks badly</td></tr>
+<tr><td>Satin</td><td>Kitchens, bathrooms, high-traffic areas</td><td>Walls with imperfections — sheen amplifies every bump</td></tr>
+<tr><td>Semi-gloss</td><td>Trim, doors, cabinets, bathrooms</td><td>Large wall surfaces — too much reflection</td></tr>
+<tr><td>Gloss</td><td>Front doors, metal railings, furniture</td><td>Walls — shows every imperfection</td></tr>
+</tbody>
+</table>
+<div class="callout callout-warn"><div class="callout-label">Sheen mismatch</div><p>Patch a satin wall with flat paint, or spot-paint in a different sheen, and the repair shows as a dull patch in raking light. Always match the sheen exactly, or repaint the entire wall.</p></div>`},
+                    {
+                        title: "Stain blocking — what works and what doesn't", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "20 min",
+                        body: `<p>Water stains, smoke, tannin bleed, marker, and grease are the five problem surfaces standard primer cannot block. Using the wrong primer guarantees bleed-through.</p>
+<div class="callout callout-diag"><div class="callout-label">The test</div><p>Apply your chosen primer. Cure 24 hours. Apply one coat white topcoat. If the stain shows through, the primer failed. This one-day test costs far less than a full repaint after the whole job is done.</p></div>
+<table class="dtable">
+<thead><tr><th>Problem</th><th>What works</th><th>What doesn't</th></tr></thead>
+<tbody>
+<tr><td>Water stains (light)</td><td>Shellac-based (BIN) or oil-based (Kilz Original)</td><td>Water-based stain blockers — bleed through within 6 months</td></tr>
+<tr><td>Heavy smoke or fire damage</td><td>Two coats shellac-based (BIN) — no substitute</td><td>Any water-based product including premium stain blockers</td></tr>
+<tr><td>Cedar/redwood tannin bleed</td><td>Shellac-based BIN or oil-based alkyd primer</td><td>Water-based products — tannin migrates through them</td></tr>
+<tr><td>Grease (kitchen)</td><td>Clean with TSP first, then oil-based primer</td><td>Any primer applied over uncleaned grease</td></tr>
+<tr><td>Marker, crayon</td><td>Shellac BIN applied directly over the mark</td><td>Latex primer — pigment migrates through it</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Painting over wallpaper", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Painting over wallpaper is almost always a mistake — but sometimes removing it would destroy the drywall beneath (common in older homes). If removal isn't an option, here's how to do it properly.</p>
+<div class="callout callout-warn"><div class="callout-label">Always try removal first</div><p>Score the paper, spray with hot water and fabric softener solution, try a test area. If drywall comes off with the paper, stop. Skim-coating the entire wall after removal may be the lesser damage compared to painting over wallpaper.</p></div>
+<div class="steps">
+<div class="step">Repair all seams and bubbles: re-glue lifted seams with seam adhesive, press flat, let dry 24 hours. Apply joint compound over deep seams or damaged areas.</div>
+<div class="step">Prime with oil-based primer — essential. Water-based primer soaks into the paper and causes it to bubble and lift. Oil-based seals without introducing moisture.</div>
+<div class="step">After oil primer, check every inch for lifting seams and bubbles. Re-glue anything that moved and re-prime those spots.</div>
+<div class="step">Two coats quality latex topcoat. Thin the first coat 10% with water to penetrate without raising the paper.</div>
+<div class="step">Accept the limitation: painted wallpaper never looks like painted drywall. Seams show in raking light. Set this expectation with the client before starting.</div>
+</div>`},
+                    {
+                        title: "Exterior paint failures", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "35 min",
+                        body: `<p>Exterior paint fails faster because UV, moisture, temperature cycling, and biological growth attack it simultaneously. Diagnosing which is winning tells you what prep to focus on.</p>
+<table class="dtable">
+<thead><tr><th>Failure</th><th>Cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Peeling in long strips</td><td>Moisture from inside the wall pushing out</td><td>Address interior moisture source before repainting. Use breathable primer.</td></tr>
+<tr><td>Fading unevenly</td><td>South and west exposures get more UV</td><td>Use 100% acrylic with UV stabilisers. Re-coat affected sides more frequently.</td></tr>
+<tr><td>Mildew (black/green spotting)</td><td>Shade, moisture, and organic material</td><td>Kill with 3:1 water/bleach, rinse, use mildew-resistant paint with biocide additive.</td></tr>
+<tr><td>Cracking at caulk joints</td><td>Caulk failed before paint — bridging a flexible joint</td><td>Remove all old caulk to bare substrate. Recaulk with 50-year paintable silicone urethane. Prime caulk before painting over.</td></tr>
+<tr><td>Rust staining around fasteners</td><td>Non-galvanised nails rusting under paint</td><td>Spot-prime with shellac or oil primer directly over each fastener. On re-sides: upgrade to stainless or hot-dip galvanised.</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Brush marks in trim — causes and prevention", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>Brush marks in trim are caused by paint drying faster than it can level. The fix is almost always product + temperature + technique — not a better brush.</p>
+<div class="steps">
+<div class="step">Paint in the right conditions: 65–75°F with moderate humidity. Hot, dry conditions cause paint to dry before it levels. Add Floetrol in those conditions.</div>
+<div class="step">Don't over-brush: apply in one direction, then tip off lightly with the very tip of the brush in long strokes. Every additional pass after the paint starts to tack creates drag marks.</div>
+<div class="step">Use the right product: standard latex on trim always shows brush marks. Use a water-based alkyd (Benjamin Moore Advance, Emerald Urethane) — these self-level significantly better.</div>
+<div class="step">Thin the first coat 10%: it penetrates better, levels faster, and brush marks from the first coat disappear under the second.</div>
+<div class="step">Persistent brush marks: sand between coats with 220-grit — knocks down the marks from the first coat. Two thinner coats always beat one thick one for trim.</div>
+</div>`},
+                    {
+                        title: "Painting in difficult conditions", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>Temperature, humidity, and direct sunlight are the three environmental factors that wreck paint jobs. Most exterior failures trace back to painting in conditions they shouldn't have — usually because a deadline was tight.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Temperature: most latex paints require 50–90°F ambient AND surface temperature. Check surface temp with an infrared thermometer — a south-facing wall can be 30°F hotter than the air</li>
+<li><i class="fa-solid fa-check ci-green"></i>Humidity above 85%: latex won't cure — it stays soft and sticky. Increase ventilation, use a dehumidifier, or wait for better conditions</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Direct sunlight on exterior: follow the shade around the house. North side in the morning, east in the afternoon. Paint chasing the shade produces a dramatically better result</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Rain within 4 hours: never paint exterior if rain is forecast within 4 hours. Even dried latex is susceptible to rain wash within the first 24 hours of cure</li>
+</ul>`},
+                    {
+                        title: "Sprayer operation — tip selection and technique", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>An airless sprayer produces a flawless finish faster than a brush on large surfaces — but overspray, runs, and wrong tip selection waste more time than you save if you go in unprepared.</p>
+<div class="callout callout-info"><div class="callout-label">Tip numbers decoded</div><p>First digit × 2 = fan width in inches. Last two digits = orifice in thousandths of an inch. 517: 10" fan, 0.017" orifice. Walls: 515–519. Trim: 210–212. Thick coatings: 521–523.</p></div>
+<div class="steps">
+<div class="step">Pressure: start at the lowest that atomises properly. Test on cardboard — uniform oval fan with no tails. Tails = increase pressure slightly. Too much pressure = excessive overspray.</div>
+<div class="step">Distance and speed: 12" from surface, consistent arm speed. Trigger before the gun faces the surface, release before stopping. Triggering while stationary builds up a heavy spot.</div>
+<div class="step">Overlap each pass 50%: the fan is heaviest centre, lighter at edges. 50% overlap compensates for this and creates even film thickness.</div>
+<div class="step">Masking: cover everything within 20 feet. Fine mist is nearly invisible and travels far — cars, plants, windows, all of it.</div>
+<div class="step">Thinning: most paints need 10–15% water for proper atomisation. Too thick = orange-peel texture. Test consistency: paint should flow in a continuous ribbon off the stir stick, not drop in blobs.</div>
+</div>`},
+                    {
+                        title: "Paint storage and reuse", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "15 min",
+                        body: `<p>Leftover paint stored correctly stays usable for 2–5 years. Stored poorly, it skins, separates, or grows mould and is wasted.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Store upside down to create an airtight seal at the lid — prevents a skin forming on the surface. Turn right-side up before opening</li>
+<li><i class="fa-solid fa-check ci-green"></i>Store at room temperature — paint through a freeze-thaw cycle separates permanently (the lumpy cottage cheese test)</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Before using old paint: strain through a paint strainer into a clean bucket. Lumps from a skin cause problems even if you stir them in</li>
+<li><i class="fa-solid fa-check ci-green"></i>Label every can with room, colour name, formula, and date — makes future touch-ups possible years later</li>
+<li><i class="fa-solid fa-xmark ci-red"></i>Never return contaminated paint (brush hairs, dust, insects) to the original can — it contaminates the whole can and ruins the next use</li>
+</ul>`}
+                ]
+            },
+            {
+                id: "business", label: "Diagnosis & Business", eyebrow: "Module 6 of 7", title: "Advanced problem diagnosis & business operations",
+                intro: "Systematic troubleshooting frameworks, scope management, pricing for real profit, and building a referral operation that works without advertising.",
+                lessons: [
+                    {
+                        title: "A diagnostic framework for any problem", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>The best diagnosticians in any trade follow a system, not intuition. Here's a transferable framework that works whether you're chasing an electrical fault or a mystery leak.</p>
+<div class="steps">
+<div class="step"><strong>Define the symptom precisely.</strong> Not "there's a leak" — where exactly, when does it happen, how much, what changed recently? A leak only when the upstairs shower runs is completely different from a leak after rain.</div>
+<div class="step"><strong>Generate three possible causes.</strong> Never commit to the first explanation that fits. Write down the two others even if they seem less likely.</div>
+<div class="step"><strong>Find the cheapest test that eliminates the most possibilities.</strong> A dye tablet in a toilet tank takes 30 seconds and eliminates the fill valve from suspicion entirely. Do the cheap tests first.</div>
+<div class="step"><strong>Work from simple to complex.</strong> Most problems have simple causes. A loose wire nut causes the same symptom as a failed breaker — check the wire nut first.</div>
+<div class="step"><strong>Know when you're out of scope.</strong> If the diagnostic process leads to gas lines, main panels, structural members, or active mould — stop and refer. Your value is accurate triage, not heroics.</div>
+</div>`},
+                    {
+                        title: "Scope creep — managing it professionally", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "25 min",
+                        body: `<p>Scope creep is the single biggest profitability killer in handyman work. A $300 job that turns into a $1,000 job at a fixed price isn't a win — it's three jobs done for one payment.</p>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Quote in writing with a specific scope statement — "replace kitchen faucet; excludes supply line replacement, valve work, or under-sink cabinet repairs"</li>
+<li><i class="fa-solid fa-check ci-green"></i>When you discover unexpected work, stop, photograph it, and call the client immediately — never silently proceed and invoice for it later</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Have a standard change order form — even a text message with the dollar amount and the client's confirmation reply is your paper trail</li>
+<li><i class="fa-solid fa-check ci-green"></i>Build a contingency line item on jobs involving opening walls, lifting floors, or removing fixtures — not a hidden markup, but an explicit buffer both parties understand</li>
+</ul>`},
+                    {
+                        title: "Pricing for profit, not just covering costs", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Most self-employed handymen charge what feels fair and wonder why they're not making money. The problem is almost always an incomplete cost model.</p>
+<div class="callout callout-info"><div class="callout-label">True cost model</div><p>Target take-home $80k/year: assume 40% of working hours are unbillable (driving, quoting, admin, callbacks). That leaves ~1,000 billable hours/year. Add 30% for taxes and self-employment, plus overhead. You need to invoice ~$140–160k to take home $80k — meaning your billable rate needs to be $140–160/hr, not $60–80.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>Charge a flat trip/assessment fee for diagnostic calls — $75–150 is standard and filters out tire-kickers</li>
+<li><i class="fa-solid fa-check ci-green"></i>Track actual time on every job for 3 months and compare to estimates — most people are 20–30% optimistic on time</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Materials markup of 15–20% over invoice is standard and expected — you're providing sourcing, transportation, and warranty on parts</li>
+</ul>`},
+                    {
+                        title: "Building a referral engine", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>A referral is not an accident — it's the downstream result of a deliberate process. Clients refer when they trust you, remember you, and have an easy way to share your details.</p>
+<div class="steps">
+<div class="step"><strong>The follow-up call.</strong> Ring 3–5 days after a job to ask if everything is working well. Most tradespeople never do this. The call itself builds trust — and if there's an issue, you'd rather know now than via a Google review.</div>
+<div class="step"><strong>Make it easy to refer.</strong> Text the client a link to your Google Business page immediately after they express satisfaction. Ask when they're still in the warm afterglow of a completed job, not weeks later.</div>
+<div class="step"><strong>Own a niche in the client's mind.</strong> "My handyman does everything" is a weak referral. "My handyman is the best at drywall repair — you can't see his patches" is strong. Pick one or two skills to be known for and deliver them exceptionally.</div>
+<div class="step"><strong>Stay on the radar.</strong> A quarterly maintenance reminder to your existing client list takes 20 minutes and generates more call-backs than any advertising spend.</div>
+</div>`}
+                ]
+            },
+            {
+                id: "roofing", label: "Roofing", eyebrow: "Module 7 of 7", title: "Roofing — 14 common problems",
+                intro: "The roof is the most consequential system on any house. A handyman who can diagnose correctly, repair safely, and know when to refer is among the most valued tradespeople in any market. 14 lessons — from roof anatomy through to when to walk away.",
+                lessons: [
+                    {
+                        title: "Understanding roof anatomy", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>You cannot diagnose or repair a roof without understanding its components. Every roofing problem connects to one or more of these layers failing in a predictable way.</p>
+<table class="dtable">
+<thead><tr><th>Component</th><th>Function</th><th>Common failure</th></tr></thead>
+<tbody>
+<tr><td>Shingles (field)</td><td>Primary weather surface</td><td>Cracking, curling, missing granules, impact damage</td></tr>
+<tr><td>Ridge cap shingles</td><td>Seal the ridge (highest point)</td><td>Wind lift, cracking — first to fail on an aging roof</td></tr>
+<tr><td>Flashing (step, counter, valley)</td><td>Waterproof transitions — roof-to-wall, roof-to-chimney, valley intersections</td><td>Rust, sealant failure, improper installation — responsible for 80–90% of roof leaks</td></tr>
+<tr><td>Underlayment (felt or synthetic)</td><td>Secondary water barrier under shingles</td><td>Tears at fasteners, degrades over time</td></tr>
+<tr><td>Decking (OSB or plywood)</td><td>Structural substrate</td><td>Rot from prolonged moisture, delamination</td></tr>
+<tr><td>Fascia and soffit</td><td>Close the eave — fascia is vertical, soffit is horizontal underside</td><td>Rot from gutter overflow; pest entry</td></tr>
+<tr><td>Ice and water shield</td><td>Self-adhering membrane at eaves and valleys</td><td>Missing entirely on older roofs — creates ice dam vulnerability</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Finding roof leaks — the systematic approach", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "35 min",
+                        body: `<p>Water follows gravity and travels along framing before dripping. The stain on the ceiling is rarely directly below the entry point.</p>
+<div class="callout callout-diag"><div class="callout-label">The rule of water travel</div><p>Mark the ceiling stain, then go into the attic. Look for the highest point of moisture on the framing — water enters the roof system at the highest wet point and runs down. The leak source is uphill from where you find moisture.</p></div>
+<div class="steps">
+<div class="step">Go into the attic in daylight without a torch. Look for pinhole daylight through the roof deck. Also look for dark staining on the sheathing — this indicates chronic slow leakage.</div>
+<div class="step">Check flashings first — step flashing at dormers, counter flashing at chimneys, valley flashing. Flashing failures cause 80–90% of all roof leaks. A shingle failure causing a leak is less common than people assume.</div>
+<div class="step">Check all roof penetrations: vent pipes, exhaust fans, skylights, satellite mounts. Every fastener through a roof is a potential entry point.</div>
+<div class="step">If you can't find the source: use a hose systematically. Start at the lowest part of the roof, have a helper inside. Move the water source progressively upward in 5-minute stages — when the leak appears inside, you're near the source.</div>
+<div class="step">Leaks only in driving rain from one direction: wind-driven rain enters at low-pitch roof-wall intersections, gable end gaps, or ridge vents. Different investigation than a straight-down rain leak.</div>
+</div>`},
+                    {
+                        title: "Flashing failures — the primary cause of leaks", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>In 30 years on roofs, 80% of residential leaks come from failed or improperly installed flashing — not failed shingles. Understanding flashing is the most valuable roofing skill a handyman can develop.</p>
+<div class="steps">
+<div class="step">Step flashing (dormers, additions, skylights): individual L-shaped pieces that interleave with each shingle course. Each piece should be 8" wide and 10" long. Failure usually means it was caulked rather than properly lapped, or it has rusted through.</div>
+<div class="step">Counter flashing (chimneys): embeds into the mortar joint and laps over the step flashing below. Most common failure is the mortar joint caulk drying out. Re-rake the joint 1" deep, press new counter flashing in, seal with polyurethane caulk.</div>
+<div class="step">Pipe boots (rubber flashing around vent pipes): the rubber collar cracks from UV after 10–15 years. Replacement: slide new boot over pipe, nail the base, seal with urethane caulk under surrounding shingles. This fix resolves a large percentage of single-source leaks.</div>
+<div class="step">Caulked vs. lapped flashing: any flashing that relies on caulk to be waterproof is wrong. Caulk is a maintenance item — it lasts 5–10 years. Correctly lapped metal flashing relies on water physics (water runs down, not up) and lasts as long as the roof.</div>
+<div class="step">Aluminium against masonry: aluminium reacts with lime and corrodes rapidly. Use galvanised steel against concrete or brick — aluminium only in non-contact applications.</div>
+</div>`},
+                    {
+                        title: "Missing and damaged shingles", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "35 min",
+                        body: `<p>A missing shingle is a visible emergency — exposed underlayment lasts days to weeks before moisture penetrates. Both missing and cracked shingles are handyman repairs if limited to a few.</p>
+<div class="callout callout-warn"><div class="callout-label">Safety first</div><p>Never get on a roof wet or with frost. Never walk a steep slope (over 6:12 pitch) without fall protection. Use roof jacks (brackets) on any pitch you feel uncomfortable on — they're inexpensive, rent easily, and prevent the most serious handyman injuries.</p></div>
+<div class="steps">
+<div class="step">Replacing a missing shingle: slide a flat bar under the course above to expose the nails in the missing shingle's row. Remove any remaining nail stubs. Slide the new shingle in, nail at the nail line, seal nail heads with roofing cement.</div>
+<div class="step">Cracked but in place: apply roofing cement under each crack and press flat. Apply cement over the crack. This is temporary — a cracked shingle re-opens within a year or two.</div>
+<div class="step">Matching shingles: take a sample to the supplier. Architectural shingles vary by batch and age — an exact colour match 10 years later is unlikely. Consider replacing a full slope if aesthetics matter.</div>
+<div class="step">Nailing: nail zone is marked on the shingle face, typically 1" above the cutout. Too high = shingle isn't secure. Too low = nail in the exposure area, will rust and leak.</div>
+<div class="step">Cold weather: asphalt shingles become brittle below 50°F. Warm the shingles with a heat gun before lifting — they crack easily when cold.</div>
+</div>`},
+                    {
+                        title: "Ridge cap repair and replacement", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Ridge cap shingles are the most exposed part of the roof — maximum wind load and UV exposure. They fail before field shingles on every roof. Ridge cap replacement is the most common single-area repair call I get.</p>
+<div class="steps">
+<div class="step">Assess from the ground with binoculars before climbing. Lifted, cracked, or missing ridge caps are clearly visible. Count affected sections to estimate materials.</div>
+<div class="step">Remove old caps: loosen the nails with a flat bar. Work from one end toward the other so you don't step on caps you've already removed.</div>
+<div class="step">Install new ridge caps: use purpose-made ridge cap shingles, not cut-down 3-tab. Nail at both sides, 5–6" from each end. Each cap overlaps the previous by at least 5".</div>
+<div class="step">Final cap at the hip or end: must be hand-sealed — it can't be nailed through without exposed nail heads. Apply roofing cement to the underside and press down firmly. Seal all exposed nail heads.</div>
+<div class="step">Hip ridges: start at the bottom, work up. Each cap laps the one below. The very top cap is sealed rather than nailed.</div>
+</div>`},
+                    {
+                        title: "Valley repair", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Roof valleys carry the highest concentration of water on a roof — all runoff from two slopes merges here. Valley failures cause significant damage quickly.</p>
+<div class="callout callout-diag"><div class="callout-label">Three valley types</div><p>Open metal valley: visible metal flashing, shingles don't cross. Closed-cut: shingles from one side cross and are cut straight. Woven: shingles from both sides alternate across. Leaks in each type have different causes and different fixes.</p></div>
+<div class="steps">
+<div class="step">Open valley leak: metal rusted through or shingle edges at valley have lifted. Small rust spot: wire brush, fibreglass mesh reinforcement, elastomeric roof sealant. Widespread rust: replace the valley metal entirely.</div>
+<div class="step">Closed-cut valley leak: the cut edge has lifted or shingles cracked at the valley line (common in cold climates). Seal with roofing cement. Recurring: expose the valley and install ice-and-water shield.</div>
+<div class="step">Valley metal replacement: use 28-gauge galvanised steel minimum, 24" wide. Install with no exposed fasteners — nail at outer edges only. Overlap sections by 12" with sealant between layers. Never use aluminium in valleys — too soft, punctures easily.</div>
+</div>`},
+                    {
+                        title: "Flat roof blisters and seams", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>Flat roofs use completely different materials from pitched roofs. The most common residential systems are modified bitumen (torch-down), EPDM (rubber), and built-up roofing (tar and gravel).</p>
+<table class="dtable">
+<thead><tr><th>Problem</th><th>System</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Blistering (bubbles)</td><td>Modified bitumen or BUR</td><td>Small, uncracked blisters: leave them — cosmetic only. Cracked blisters: cut an X, press flaps flat, seal with fibreglass mesh + roof cement + granules.</td></tr>
+<tr><td>Lifted seam</td><td>Modified bitumen</td><td>Inject roof cement under the seam, press flat, roll with a seam roller. Apply a reinforcing fabric strip over the seam sealed with roof cement.</td></tr>
+<tr><td>Puncture or tear</td><td>EPDM rubber</td><td>Clean with EPDM primer. Apply factory-made EPDM repair patch with EPDM bonding adhesive. Do NOT use roof cement or asphalt products on EPDM — incompatible.</td></tr>
+<tr><td>Ponding water (standing 48+ hours)</td><td>Any flat system</td><td>Ponding accelerates every failure. Add a drain or raise the low spot with tapered insulation. This is a design problem, not a material problem.</td></tr>
+</tbody>
+</table>`},
+                    {
+                        title: "Gutter cleaning and repair", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Gutters are the most neglected part of the roof system and the most consequential when they fail. Overflowing gutters cause fascia rot, soffit rot, foundation water intrusion — from a problem that takes 30 minutes twice a year to prevent.</p>
+<div class="steps">
+<div class="step">Clean at minimum twice yearly: after autumn leaf fall and after spring pollen season. In areas with overhanging trees, quarterly is better. A blocked gutter can overflow for months without any visible sign from the ground.</div>
+<div class="step">Flush after cleaning: run a hose from the far end toward the downspout. Water should flow freely and exit the downspout bottom without backing up. Slow drainage = downspout blockage. Snake it from the top or flush from below at full pressure.</div>
+<div class="step">Check pitch while cleaning: use a string line. Gutters slope 1/4" per 10 feet toward the downspout. A sag means a hanger failed — add a screw-in hanger at the sag (24" max spacing throughout).</div>
+<div class="step">Gutter leaks at joints: clean and dry the joint thoroughly. Apply gutter sealant from inside. The upper section always inserts into the lower — water going the wrong direction through a joint leaks regardless of sealant.</div>
+<div class="step">Holes in aluminium gutters: clean to bare metal, apply fibreglass mesh reinforcement, seal with gutter sealant over and under the mesh. Direct-seal for holes under 1/4".</div>
+</div>`},
+                    {
+                        title: "Fascia and soffit rot", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "40 min",
+                        body: `<p>Fascia and soffit rot is almost always caused by gutter overflow. Fix the gutters first or the repair fails within 3 years — the rot is a lagging indicator of a drainage problem that has been running for months.</p>
+<div class="steps">
+<div class="step">Probe before pricing: use an awl at 6" intervals along the affected run. Rot extends behind the gutter where you can't see it, and often into the rafter tails behind. The visible damage is rarely the full extent.</div>
+<div class="step">Remove the gutters first. You cannot properly inspect or replace fascia with gutters in place. Label sections and hanger locations for reinstallation.</div>
+<div class="step">Fascia replacement: pry the old board off carefully — the drip edge (metal flashing at the roof edge) is nailed through the fascia and must be reinstalled correctly. Use pre-primed PVC fascia trim where possible — impervious to moisture, eliminates future rot.</div>
+<div class="step">Soffit replacement: measure the cavity carefully — the channel at each end must support the panel. Install new soffit with adequate ventilation: 1 sq ft net free area per 150 sq ft of attic floor.</div>
+<div class="step">After repair: prime all cut wood ends with oil-based primer before installing. Bare end grain against a gutter system is rot waiting to happen.</div>
+</div>`},
+                    {
+                        title: "Roof vent blockages and attic ventilation", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "30 min",
+                        body: `<p>Attic ventilation is one of the most misunderstood roofing topics. Both too little and too much cause problems. The goal is balanced intake at the soffits and exhaust at the ridge.</p>
+<div class="callout callout-info"><div class="callout-label">The 1-to-150 rule</div><p>One square foot of net free ventilation area per 150 sq ft of attic floor — split evenly between low intake (soffit vents) and high exhaust (ridge vent or high gable vents). An all-exhaust, no-intake system actually draws conditioned air from the living space. Fix the intake first.</p></div>
+<div class="steps">
+<div class="step">Blocked soffit vents: most common ventilation problem. Insulation installed from inside covers soffit vent baffles. Install foam baffles (rafter chutes) at every rafter bay at the eave — maintains the air channel regardless of insulation depth.</div>
+<div class="step">Ridge vent blockage: check for wasp nests, debris, or snow cap. Clear from inside the attic with a stiff brush.</div>
+<div class="step">Turbine vents that don't spin: seized bearing from a wasp nest. Remove the cap, clear the interior, oil the bearing with penetrating lubricant.</div>
+<div class="step">Signs of poor ventilation: frost on roof deck underside in winter, black mould on rafters, excessive heat in summer, or shingles aging prematurely on the south slope.</div>
+<div class="step">Never mix ridge vents with high gable vents on the same roof — both are exhaust vents. Wind forces one to become an intake for the other, short-circuiting airflow and leaving the lower attic unventilated.</div>
+</div>`},
+                    {
+                        title: "Skylight leaks", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "30 min",
+                        body: `<p>Most skylight leaks are flashing failures, not skylight failures. Before replacing an expensive unit, diagnose the actual failure point.</p>
+<div class="steps">
+<div class="step">Water running down the inside of the frame (not the glass): flashing failure. Water is entering around the curb and tracking inside. This is a roof repair, not a skylight replacement.</div>
+<div class="step">Fogged or wet between panes: failed seal in the double-pane unit. The skylight itself needs replacement, but the roof flashing is fine.</div>
+<div class="step">Re-caulking the curb: clean existing sealant thoroughly, apply fresh urethane caulk (not silicone — silicone can't be painted over and deteriorates in UV). Buys 5–10 years before full flashing replacement is needed.</div>
+<div class="step">Full skylight flashing replacement: remove surrounding shingles, remove curb flashing, install ice-and-water shield to full perimeter 6" beyond the curb, install new step flashing interleaved with new shingles, counter flashing at the uphill side.</div>
+<div class="step">Flat polycarbonate dome skylights: the rubber gasket between the dome and the curb frame deteriorates. Replace the gasket first before assuming anything else is wrong.</div>
+</div>`},
+                    {
+                        title: "Moss, algae, and lichen on roofs", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "25 min",
+                        body: `<p>Moss, algae, and lichen hold moisture against the shingle surface and accelerate deterioration. But aggressive removal causes as much damage as leaving them. The approach must match the growth type and shingle condition.</p>
+<table class="dtable">
+<thead><tr><th>Growth type</th><th>Identification</th><th>Treatment</th></tr></thead>
+<tbody>
+<tr><td>Algae (black streaking)</td><td>Black or dark brown streaks, most common on north slopes</td><td>Apply zinc sulphate or sodium hypochlorite solution (1:3 bleach:water). Wet roof, apply, sit 20 min, rinse gently. Never pressure-wash asphalt shingles.</td></tr>
+<tr><td>Moss (green carpet)</td><td>Soft green growth, especially in shade</td><td>Apply commercial moss killer (potassium soap of fatty acids or zinc sulphate). Let it die and wash off in rain — do not scrape living moss, the rhizoids damage the granule layer.</td></tr>
+<tr><td>Lichen (grey-green crust)</td><td>Hard, circular, crusty growth bonded to the shingle</td><td>Most difficult to remove. Apply moss killer, wait 6 months for it to die, then gently brush. Lichen leaves permanent scarring — heavily lichened shingles are at end of life.</td></tr>
+</tbody>
+</table>
+<div class="callout callout-info"><div class="callout-label">Prevention</div><p>Install zinc or copper strips at the ridge — rainwater picks up trace amounts of metal and runs down, inhibiting biological growth for 15–20 feet below the strip. The only passive long-term solution.</p></div>`},
+                    {
+                        title: "Ice dams — cause, prevention, and repair", badges: [{ t: "Advanced", c: "badge-adv" }], dur: "35 min",
+                        body: `<p>An ice dam forms when heat escaping through the roof melts snow, which refreezes at the cold eave overhang. It's a building science problem — fixing just the roof doesn't fix ice dams.</p>
+<div class="callout callout-diag"><div class="callout-label">Root cause</div><p>Ice dams form where attic insulation or ventilation is insufficient — warm attic air melts the roof deck above it. Houses without ice dams in the same storm have adequate insulation (R-49+) and balanced ventilation that keeps the roof deck uniformly cold.</p></div>
+<div class="steps">
+<div class="step">Emergency treatment: use a roof rake to remove snow from the eave from the ground. Do not chip at ice with a pick — you'll destroy the shingles. Create a channel through the dam with calcium chloride ice melt in a nylon stocking laid across it.</div>
+<div class="step">Immediate interior protection: if water is running inside, place sheet metal flashing under the shingles at the entry point as a temporary measure while the weather improves.</div>
+<div class="step">After the dam clears: inspect shingles at the eave for cracking, lifted tabs, and torn underlayment. At next reroofing, install ice-and-water shield extending 24" past the interior wall line.</div>
+<div class="step">Permanent fix — attic insulation: increase to R-49 minimum. Seal all air penetrations from the living space into the attic (top plates, electrical boxes, plumbing stacks) — air leakage contributes as much heat to the roof deck as conductive loss through insulation.</div>
+<div class="step">Permanent fix — ventilation: ensure soffit vents are clear and provide adequate intake. Cold, well-ventilated attic + good air sealing + proper insulation = no ice dams in all but extreme climates.</div>
+</div>`},
+                    {
+                        title: "When to refer to a roofer", badges: [{ t: "Diagnostics", c: "badge-diag" }], dur: "20 min",
+                        body: `<p>One of the most valuable things a handyman can do is know their scope. On roofing, the line between handyman and roofing contractor is well defined.</p>
+<div class="callout callout-diag"><div class="callout-label">Handyman scope on roofing</div><p>Replacing up to 10–12 shingles, re-sealing pipe boots and flashing, cleaning gutters, minor fascia and soffit repairs on accessible roofs, moss treatment, ridge cap replacement on safe pitches, skylight re-caulking, and providing precise leak diagnosis for roofing contractor referrals.</p></div>
+<div class="callout callout-warn"><div class="callout-label">Refer to a licensed roofer when</div><p>The roof needs more than 10–15 shingles replaced (signals systemic aging), the decking is damaged, the pitch is over 6:12 without fall protection, the job involves structural ridge reconstruction, the homeowner's insurance is involved (claim work typically requires a licensed contractor), or you find multiple layers of roofing requiring tear-off.</p></div>
+<ul class="checklist">
+<li><i class="fa-solid fa-check ci-green"></i>A precise diagnosis report from you — location, likely cause, scope of work needed — is worth real money to a roofer. It shortens their assessment and positions you as the expert who identified the problem</li>
+<li><i class="fa-solid fa-check ci-green"></i>Build a relationship with one or two quality roofing contractors — you refer them roofing work, they refer you handyman work. One of the most productive referral relationships in the trades</li>
+<li><i class="fa-solid fa-triangle-exclamation ci-amber"></i>Document your repair scope and exclusions in writing for every roofing job — roof leaks after a handyman repair are common warranty claims</li>
+</ul>`}
+                ]
+            }
+        ];
+
+        const nav = document.getElementById('nav');
+        const mods = document.getElementById('modules');
+
+        data.forEach((mod, mi) => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-btn' + (mi === 0 ? ' active' : '');
+            btn.textContent = mod.label;
+            btn.setAttribute('aria-label', mod.title);
+            btn.onclick = () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('mod-' + mod.id).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            nav.appendChild(btn);
+
+            const div = document.createElement('div');
+            div.className = 'module' + (mi === 0 ? ' active' : '');
+            div.id = 'mod-' + mod.id;
+
+            const next = data[mi + 1];
+            div.innerHTML = `
+    <div class="mod-header">
+      <div class="mod-eyebrow">Module ${mi + 1} of ${data.length}</div>
+      <h2 class="mod-title">${mod.title}</h2>
+      <p class="mod-intro">${mod.intro}</p>
+    </div>
+    <div class="lessons">
+      ${mod.lessons.map((l, li) => `
+        <div class="lcard" id="lc-${mod.id}-${li}">
+          <div class="lhead" onclick="toggleL('lc-${mod.id}-${li}')" role="button" tabindex="0" aria-expanded="false">
+            <div class="lnum">${li + 1}</div>
+            <div class="ltitle-wrap">
+              <span class="ltitle">${l.title}</span>
+              ${(l.badges || []).map(b => `<span class="badge ${b.c}">${b.t}</span>`).join('')}
+            </div>
+            <span class="ldur"><i class="fa-regular fa-clock" aria-hidden="true"></i> ${l.dur}</span>
+            <i class="fa-solid fa-chevron-down lchev" aria-hidden="true"></i>
+          </div>
+          <div class="lbody" id="lb-${mod.id}-${li}">${l.body}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="mod-footer">
+      <span class="prog-label">${mod.lessons.length} lessons &middot; module ${mi + 1} of ${data.length}</span>
+      ${next
+                    ? `<button class="next-btn" onclick="goMod('${next.id}')">Next: ${next.label} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>`
+                    : `<button class="next-btn" onclick="alert('Course complete! ' + data.reduce((a,m)=>a+m.lessons.length,0) + ' lessons done. Consider building on your skills with a trade-specific certification.')">Course complete ✓</button>`
+                }
+    </div>
+  `;
+            mods.appendChild(div);
+        });
+
+        function toggleL(id) {
+            const card = document.getElementById(id);
+            const isOpen = card.classList.toggle('open');
+            card.querySelector('.lhead').setAttribute('aria-expanded', isOpen);
+        }
+
+        function goMod(id) {
+            data.forEach((m, i) => {
+                document.querySelectorAll('.nav-btn')[i].classList.toggle('active', m.id === id);
+            });
+            document.querySelectorAll('.module').forEach(m => {
+                m.classList.toggle('active', m.id === 'mod-' + id);
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const el = e.target;
+                if (el.classList.contains('lhead')) {
+                    e.preventDefault();
+                    const card = el.closest('.lcard');
+                    if (card) toggleL(card.id);
+                }
+            }
+        });
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => { });
+            });
+        }
+    </script>
+</body>
+
+</html>

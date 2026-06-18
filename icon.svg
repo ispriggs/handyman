@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#2A5C45" rx="45"/>
+  <g transform="translate(96, 96)">
+    <!-- Hammer icon -->
+    <rect x="-15" y="-8" width="30" height="8" fill="white" rx="2"/>
+    <rect x="10" y="-8" width="12" height="48" fill="white" rx="3"/>
+    <circle cx="16" cy="-12" r="16" fill="white"/>
+  </g>
+</svg>

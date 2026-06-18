@@ -1,0 +1,29 @@
+{
+    "buildCommand": "echo 'Static site, no build needed'",
+    "outputDirectory": ".",
+    "public": true,
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=3600"
+                }
+            ]
+        },
+        {
+            "source": "/manifest.json",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/manifest+json"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=604800"
+                }
+            ]
+        }
+    ]
+}
